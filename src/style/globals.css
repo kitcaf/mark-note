@@ -1,0 +1,116 @@
+/* CodeMirror */
+
+#note-editor {
+    padding: 10px;
+
+    /* codemirror editor theme */
+    /* 去掉焦点时的轮廓 */
+    & .cm-focused {
+        outline: none;
+    }
+
+    /* 左侧的行数等信息所在的边栏 */
+    & .cm-gutters {
+        background-color: var(--bl-editor-gutters-bg-color);
+        border-color: var(--bl-editor-gutters-border-color);
+        font-size: 12px;
+    }
+
+    /* 选中某行时，边栏的样式 */
+    & .cm-activeLineGutter {
+        background-color: var(--bl-editor-gutters-bg-color);
+        color: var(--el-color-primary);
+    }
+
+    /* 行号 */
+    & .cm-lineNumbers {
+        width: 40px;
+    }
+
+    /* 编辑器正文的内容 */
+    & .cm-content {
+        white-space: break-spaces;
+        word-wrap: break-word;
+        width: calc(100% - 55px);
+        overflow: auto;
+        padding: 0;
+        caret-color: #707070;
+    }
+
+    /* 编辑器每一行的内容 */
+    & .cm-line {
+        /* color: #707070; */
+        /* caretColor: 'var(--bl-editor-caret-color) !important'; */
+        word-wrap: break-word;
+        word-break: break-all;
+        padding: 0;
+    }
+
+    /* 当前选中行 */
+    & .cm-activeLine {
+        background-color: var(--bl-editor-active-line-gutter-bg-color);
+    }
+
+    /* 搜索时匹配到的样式 */
+    & .cm-selectionMatch {
+        background-color: var(--bl-editor-selection-match-bg-color);
+    }
+
+    /* 各类关键字 */
+    & .cm-focused {
+        outline: none;
+    }
+
+    & .cm-activeLine {
+        background-color: var(--bl-editor-active-line-gutter-bg-color);
+    }
+
+    & .ͼ5 {
+        color: var(--bl-editor-c5-color);
+        font-weight: 700;
+    }
+
+    & .ͼ6 {
+        color: #707070;
+        font-weight: 500;
+    }
+
+    & .ͼ7 {
+        background-color: var(--bl-editor-c7-bg-color);
+        color: var(--bl-editor-c7-color);
+    }
+
+    & .ͼc {
+        color: var(--bl-editor-cc-color);
+    }
+
+    /* ͼm: 注释 */
+    & .ͼm {
+        color: var(--bl-editor-cm-color);
+    }
+
+    /* ͼb: 关键字 */
+    & .ͼb {
+        color: var(--bl-editor-cb-color);
+    }
+
+    /* ͼd: 数字 */
+    & .ͼd {
+        color: var(--bl-editor-cd-color);
+    }
+
+    /* ͼe: 字符串 */
+    & .ͼe {
+        color: var(--bl-editor-ce-color);
+    }
+
+    /* ͼi: 类名 */
+    & .ͼi {
+        color: var(--bl-editor-ci-color);
+    }
+
+    /* ͼg: 方法名和参数 */
+    & .ͼg {
+        color: var(--bl-editor-cg-color);
+    }
+}
