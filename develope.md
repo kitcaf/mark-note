@@ -53,7 +53,12 @@ tailwindcss/typography 可以作为解决markdown -> html 后的样式的一种�
 
 - markdown 如何可以解析成html？
 
-- 解析后的html直接显示在编辑器中，如果保证html还可以继续编辑
+- 解析后的html直接显示在编辑器中，如果保证html还可以继续编辑（editable）
+目前看到：
+（1）Lexical是一个解决方案[[https://lexical.dev/docs/intro#what-can-be-built-with-lexical]]（也是非常好的解决方案）
+（2）prosemirror
+
+
 
 
 
