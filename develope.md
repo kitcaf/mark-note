@@ -58,6 +58,10 @@ tailwindcss/typography 可以作为解决markdown -> html 后的样式的一种�
 （1）Lexical是一个解决方案[[https://lexical.dev/docs/intro#what-can-be-built-with-lexical]]（也是非常好的解决方案）
 （2）prosemirror
 
+我们就使用lexical进行尝试吧
+
+
+
 
 
 

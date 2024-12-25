@@ -1,54 +1,82 @@
 <template>
     <div class="continaer flex justify-center">
-        <div ref="editor" class="note-editor" id="note-editor" style="width: 1000px;"></div>
+        <div ref="editorRef" class="note-editor" id="note-editor" style="width: 1000px;"></div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { EditorState, RangeSetBuilder } from '@codemirror/state';
-import { EditorView, keymap, Decoration, DecorationSet, } from '@codemirror/view';
-import { markdown } from '@codemirror/lang-markdown';
-import { basicSetup } from 'codemirror';
-import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
+import { createEditor, $createTextNode, $getRoot, LexicalEditor, $createParagraphNode } from 'lexical';
+import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text"
+import { registerDragonSupport } from '@lexical/dragon';
+import { createEmptyHistoryState, registerHistory } from '@lexical/history';
+import { HeadingNode, QuoteNode, registerRichText } from '@lexical/rich-text';
+import { mergeRegister } from '@lexical/utils';
 
-const editor = ref(null);
 
+
+const editorRef = ref<HTMLElement | null>(null);
+
+
+function $prepopulatedRichText() {
+    const root = $getRoot();
+    if (root.getFirstChild() !== null) {
+        return;
+    }
+
+    const heading = $createHeadingNode('h1');
+    heading.append($createTextNode('Welcome to the Vanilla JS Lexical Demo!'));
+    root.append(heading);
+    const quote = $createQuoteNode();
+    quote.append(
+        $createTextNode(
+            `In case you were wondering what the text area at the bottom is – it's the debug view, showing the current state of the editor. `,
+        ),
+    );
+    root.append(quote);
+    const paragraph = $createParagraphNode();
+    paragraph.append(
+        $createTextNode('This is a demo environment built with '),
+        $createTextNode('lexical').toggleFormat('code'),
+        $createTextNode('.'),
+        $createTextNode(' Try typing in '),
+        $createTextNode('some text').toggleFormat('bold'),
+        $createTextNode(' with '),
+        $createTextNode('different').toggleFormat('italic'),
+        $createTextNode(' formats.'),
+    );
+    root.append(paragraph);
+}
+const initialConfig = {
+    namespace: 'Vanilla JS Demo',
+    // Register nodes specific for @lexical/rich-text
+    nodes: [HeadingNode, QuoteNode],
+    onError: (error: Error) => {
+        throw error;
+    },
+    theme: {
+        // Adding styling to Quote node, see styles.css
+        quote: 'PlaygroundEditorTheme__quote',
+    },
+};
 onMounted(() => {
-    const startState = EditorState.create({
-        doc: 'Line 2\nLine 3\nLine 4',
-        extensions: [
-            markdown(),
-            history(),
-            keymap.of([...defaultKeymap, ...historyKeymap]),
-            EditorView.lineWrapping,
-            // EditorView.decorations.of((view) => {
-            //     return createLineDecorations(view.state.doc);
-            // })
-        ]
-    });
 
-    new EditorView({
-        state: startState,
-        parent: editor.value!
-    });
+    const editor = createEditor(initialConfig);
+
+    editor.setRootElement(editorRef.value);
+    console.log(editor.getEditorState().toJSON())
+
+    mergeRegister(
+        registerRichText(editor),
+        registerDragonSupport(editor),
+        registerHistory(editor, createEmptyHistoryState(), 300),
+    );
+
+    editor.update($prepopulatedRichText, { tag: 'history-merge' });
+    console.log(editor!.getEditorState().toJSON())
+
 });
 
-// // 创建装饰器
-// function createLineDecorations(doc: any): DecorationSet {
-//     const builder = new RangeSetBuilder<Decoration>();
-
-//     // 假设我们想要为第二行添加样式
-//     const lineNumber = 1; // 行索引从0开始
-//     const lineStart = doc.line(lineNumber + 1).from; // 获取第二行的起始位置
-//     const lineEnd = doc.line(lineNumber + 1).to; // 获取第二行的结束位置
-
-//     // 创建装饰器(通过添加类的方式进行样式设置)
-//     const decoration = Decoration.line({ class: 'highlighted-line' }); // 自定义类名
-//     builder.add(lineStart, lineEnd, decoration);
-
-//     return builder.finish(); // 返回 DecorationSet
-// }
 
 </script>
 
