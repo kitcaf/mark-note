@@ -35,6 +35,12 @@ importers:
       '@lexical/history':
         specifier: ^0.22.0
         version: 0.22.0
+      '@lexical/link':
+        specifier: ^0.22.0
+        version: 0.22.0
+      '@lexical/list':
+        specifier: ^0.22.0
+        version: 0.22.0
       '@lexical/rich-text':
         specifier: ^0.22.0
         version: 0.22.0
@@ -550,6 +556,9 @@ packages:
 
   '@lexical/html@0.22.0':
     resolution: {integrity: sha512-ED2Xik95a4kPg9vbU5pT/sA5hvEyGnuVxg0XvMx/6Gaa7OIhYDiZvSD4DCE+eVfn0xZMnIbX94Ygf4//71kCYw==}
+
+  '@lexical/link@0.22.0':
+    resolution: {integrity: sha512-mtlsOYW6sgbgvv1ecPt6/9CdlgP0MhVyrF8iu16JpngphVXu/Lz2BSh7TCfY0xho/H2OIu++9lUGn87cK1Zplw==}
 
   '@lexical/list@0.22.0':
     resolution: {integrity: sha512-DZLzMg1/H+nclV8BNqZe2qk/bz1ogCr7Huzwab5o8jTjpsDJaqyUZasj8wRgBzyLu9jxMQngkarL47nnk+zrbA==}
@@ -1905,6 +1914,11 @@ snapshots:
   '@lexical/html@0.22.0':
     dependencies:
       '@lexical/selection': 0.22.0
+      '@lexical/utils': 0.22.0
+      lexical: 0.22.0
+
+  '@lexical/link@0.22.0':
+    dependencies:
       '@lexical/utils': 0.22.0
       lexical: 0.22.0
 

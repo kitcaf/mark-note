@@ -1,0 +1,1 @@
+export const EDITOR_ID = "EDITOR_LEXICAL"
