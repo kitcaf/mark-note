@@ -58,6 +58,7 @@ const initialConfig = {
         // Adding styling to Quote node, see styles.css
         quote: 'PlaygroundEditorTheme__quote',
     },
+    editable: true,
 };
 onMounted(() => {
 
