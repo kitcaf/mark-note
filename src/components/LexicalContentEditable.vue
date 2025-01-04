@@ -4,6 +4,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useLexicalComposer } from '../composables/useLexicalComposer';
+import { $getRoot } from 'lexical';
 
 
 const root = ref<HTMLElement | null>(null)
@@ -11,7 +12,10 @@ const editor = useLexicalComposer()
 
 onMounted(() => {
     editor!.setRootElement(root.value)
-
+    editor!.update(() => {
+        const root1 = $getRoot()
+        console.log(root1.getTextContent())
+    })
 })
 
 </script>

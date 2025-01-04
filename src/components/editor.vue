@@ -16,15 +16,17 @@ import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
 import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { $createListItemNode, $createListNode } from '@lexical/list'
 import { $createLinkNode } from '@lexical/link'
+import { playgroundNodes } from "../type";
 
 function prepopulatedRichText() {
     const root = $getRoot()
     const paragraphNode = $createParagraphNode();
     paragraphNode.append($createTextNode('Hello World'))
     root.append(paragraphNode)
+    const heading = $createHeadingNode('h1')
 
     // if (root.getFirstChild() === null) {
-    //     const heading = $createHeadingNode('h1')
+    // const heading = $createHeadingNode('h1')
     //     heading.append($createTextNode('Welcome to the plawyground'))
     //     root.append(heading)
     //     const quote = $createQuoteNode()
@@ -101,9 +103,11 @@ function prepopulatedRichText() {
     // }
 }
 
+
 const initialConfig = {
     editorState: prepopulatedRichText as any,
-    editable: true
+    editable: true,
+    nodes: [...playgroundNodes]
 };
 
 onMounted(() => {

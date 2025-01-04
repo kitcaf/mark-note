@@ -13,14 +13,13 @@ const props = defineProps<{
     initialConfig: CreateEditorArgs
 }>()
 
-
 console.log(props.initialConfig)
 
-const editor: LexicalEditor = createEditor(
-    {
-        editable: props.initialConfig.editable,
-    }
-);
+const editor: LexicalEditor = createEditor({
+    editable: props.initialConfig.editable,
+    nodes: props.initialConfig.nodes
+});
+
 const HISTORY_MERGE_OPTIONS = { tag: 'history-merge' }
 
 initializeEditor(editor, props.initialConfig.editorState)
@@ -48,27 +47,28 @@ function initializeEditor(
             }
         }, HISTORY_MERGE_OPTIONS)
     }
-    else if (initialEditorState !== null) {
-        switch (typeof initialEditorState) {
-            case 'string': {
-                const parsedEditorState = editor.parseEditorState(initialEditorState)
-                editor.setEditorState(parsedEditorState, HISTORY_MERGE_OPTIONS)
-                break
-            }
-            case 'object': {
-                editor.setEditorState(initialEditorState, HISTORY_MERGE_OPTIONS)
-                break
-            }
-            case 'function': {
-                editor.update(() => {
-                    const root = $getRoot()
-                    if (root.isEmpty())
-                        initialEditorState(editor)
-                }, HISTORY_MERGE_OPTIONS)
-                break
-            }
+
+    // 有值的情况
+    switch (typeof initialEditorState) {
+        case 'string': {
+            const parsedEditorState = editor.parseEditorState(initialEditorState)
+            editor.setEditorState(parsedEditorState, HISTORY_MERGE_OPTIONS)
+            break
+        }
+        case 'object': {
+            editor.setEditorState(initialEditorState, HISTORY_MERGE_OPTIONS)
+            break
+        }
+        case 'function': {
+            editor.update(() => {
+                const root = $getRoot()
+                if (root.isEmpty())
+                    initialEditorState(editor)
+            }, HISTORY_MERGE_OPTIONS)
+            break
         }
     }
+
 }
 
 onMounted(() => {
