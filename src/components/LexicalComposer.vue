@@ -13,10 +13,8 @@ const props = defineProps<{
     initialConfig: CreateEditorArgs
 }>()
 
-console.log(props.initialConfig)
-
 const editor: LexicalEditor = createEditor({
-    editable: props.initialConfig.editable,
+    editable: true,
     nodes: props.initialConfig.nodes
 });
 

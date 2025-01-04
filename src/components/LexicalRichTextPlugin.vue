@@ -8,10 +8,8 @@ import { useMounted } from "../composables/useMounted"
 import { registerRichText } from '@lexical/rich-text'
 import { registerDragonSupport } from '@lexical/dragon'
 import { mergeRegister } from '@lexical/utils'
-import { onMounted } from "vue"
 
 const editor = useLexicalComposer()
-console.log("editor", editor)
 
 useMounted(
     () => {
@@ -21,9 +19,8 @@ useMounted(
         }
         let unRegister = mergeRegister(
             registerRichText(editor),
-            registerDragonSupport(editor))
-
-        console.log("Register", unRegister)
+            registerDragonSupport(editor)
+        )
         return unRegister
     }
 )
