@@ -16,7 +16,7 @@ import LexicalComposer from "./LexicalComposer.vue"
 import LexicalRichTextPlugin from "./LexicalRichTextPlugin.vue"
 import LexicalMarkdownPlugin from "./LexicalMarkdownPlugin.vue"
 import LexicalContentEditable from "./LexicalContentEditable.vue";
-import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
+import { $createParagraphNode, $createTextNode, $getRoot, CreateEditorArgs } from "lexical";
 import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { playgroundNodes } from "../type";
 import type {
@@ -28,6 +28,7 @@ import {
     TEXT_FORMAT_TRANSFORMERS,
     TEXT_MATCH_TRANSFORMERS,
 } from '@lexical/markdown'
+import basicTheme from "../theme/playgroundtheme";
 
 
 const PLAYGROUND_TRANSFORMERS: Transformer[] = [
@@ -67,10 +68,11 @@ function prepopulatedRichText() {
     root.append(paragraph);
 }
 
-const initialConfig = {
+const initialConfig: CreateEditorArgs = {
     namespace: 'note-editor',
     editorState: prepopulatedRichText as any,
     editable: true,
-    nodes: [...playgroundNodes]
+    nodes: [...playgroundNodes],
+    theme: basicTheme
 };
 </script>

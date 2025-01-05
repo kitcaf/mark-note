@@ -19,7 +19,6 @@ const props = defineProps<{
 
 const editor: LexicalEditor = createEditor({
     editable: props.initialConfig.editable,
-    html: props.initialConfig.html,
     namespace: props.initialConfig.namespace,
     nodes: props.initialConfig.nodes,
     theme: props.initialConfig.theme,

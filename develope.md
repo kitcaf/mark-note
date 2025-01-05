@@ -69,6 +69,17 @@ contenteditable 是一个HTML属性【https://developer.mozilla.org/zh-CN/docs/W
 ### 如何再Lexical中支持markdown语法
 
 > 如何实时渲染markdown语法
+@lexical/markdown
+
+### Lexicalp 配置主题
+
+> 设置每一个元素的类名，从而可以进行样式定制（写css）
+
+### UI UI搭建一下
+
+
+
+
 
 
 
