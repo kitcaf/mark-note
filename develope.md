@@ -38,9 +38,6 @@ Decorations，自定义渲染（遍历语法tree，为每一个节点进行自�
 > 这里主要是为解决在css文件中使用scss语法，不用按照scss，同时还可以规范css
 
 
-
-
-
 tailwindcss/typography 可以作为解决markdown -> html 后的样式的一种快速的方案
 [[https://github.com/tailwindlabs/tailwindcss-typography]]
 
@@ -60,6 +57,12 @@ tailwindcss/typography 可以作为解决markdown -> html 后的样式的一种�
 
 我们就使用lexical进行尝试吧
 
+### Lexical 开发问题
+
+（1）setEditable(true) 无效
+
+原因：需要设置contenteditable属性true OR false
+contenteditable 是一个HTML属性【https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/contenteditable】
 
 
 

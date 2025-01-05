@@ -9,16 +9,24 @@ import { $createParagraphNode, $getRoot, createEditor, $getSelection } from 'lex
 import { onMounted, provide } from 'vue';
 import { EDITOR_ID } from '../type';
 
+const emit = defineEmits<{
+    (e: 'error', error: Error, editor: LexicalEditor): void
+}>()
+
 const props = defineProps<{
     initialConfig: CreateEditorArgs
 }>()
 
 const editor: LexicalEditor = createEditor({
-    editable: true,
-    nodes: props.initialConfig.nodes
+    editable: props.initialConfig.editable,
+    html: props.initialConfig.html,
+    namespace: props.initialConfig.namespace,
+    nodes: props.initialConfig.nodes,
+    theme: props.initialConfig.theme,
+    onError(error) {
+        emit('error', error, editor)
+    },
 });
-
-const HISTORY_MERGE_OPTIONS = { tag: 'history-merge' }
 
 initializeEditor(editor, props.initialConfig.editorState)
 
@@ -43,18 +51,18 @@ function initializeEditor(
                     paragraph.select()
                 }
             }
-        }, HISTORY_MERGE_OPTIONS)
+        })
     }
 
     // 有值的情况
     switch (typeof initialEditorState) {
         case 'string': {
             const parsedEditorState = editor.parseEditorState(initialEditorState)
-            editor.setEditorState(parsedEditorState, HISTORY_MERGE_OPTIONS)
+            editor.setEditorState(parsedEditorState)
             break
         }
         case 'object': {
-            editor.setEditorState(initialEditorState, HISTORY_MERGE_OPTIONS)
+            editor.setEditorState(initialEditorState)
             break
         }
         case 'function': {
@@ -62,7 +70,7 @@ function initializeEditor(
                 const root = $getRoot()
                 if (root.isEmpty())
                     initialEditorState(editor)
-            }, HISTORY_MERGE_OPTIONS)
+            })
             break
         }
     }

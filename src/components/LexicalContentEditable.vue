@@ -1,31 +1,26 @@
 <template>
-    <div class="flex justify-center w-full bg-gray-200 min-h-screen">
-        <div class="w-6xl bg-white">
-            <div ref="root" class="ContentEditable__root"></div>
-        </div>
-    </div>
+
+    <div ref="root" class="ContentEditable__root" :contenteditable="editable"></div>
+
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useLexicalComposer } from '../composables/useLexicalComposer';
-import { $getRoot, $getSelection } from 'lexical';
 
 
 const root = ref<HTMLElement | null>(null)
 const editor = useLexicalComposer()!
+const editable = ref(false)
 
 onMounted(() => {
-    editor.setRootElement(root.value)
-    console.log(editor)
-    editor.update(() => {
-        const root1 = $getRoot()
+    if (root.value) {
+        editor.setRootElement(root.value)
+        editable.value = editor.isEditable()
+    }
 
-    })
-    editor.registerUpdateListener(({ editorState }) => {
-        editorState.read(() => {
-            const selection = $getSelection();
-            // console.log(selection)
-        });
+    //根据registerEditableListener去设置contenteditable的属性
+    return editor.registerEditableListener((editMode) => {
+        editable.value = editMode
     })
 })
 
