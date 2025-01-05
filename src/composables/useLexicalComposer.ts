@@ -3,11 +3,10 @@ import type { LexicalEditor } from "lexical"
 import { inject } from "vue"
 import { EDITOR_ID } from "../type"
 
-export function useLexicalComposer() {
+export function useLexicalComposer(): LexicalEditor {
     const editor = inject<LexicalEditor>(EDITOR_ID)
     if (!editor) {
-        console.error("LexicalComposer is not provided")
-        return
+        throw new Error("LexicalComposer is not provided")
     }
     return editor
 }

@@ -13,10 +13,6 @@ const editor = useLexicalComposer()
 
 useMounted(
     () => {
-        if (!editor) {
-            console.log('editor is null')
-            return
-        }
         let unRegister = mergeRegister(
             registerRichText(editor),
             registerDragonSupport(editor)

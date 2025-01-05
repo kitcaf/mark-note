@@ -7,19 +7,35 @@
                 </div>
             </div>
         </LexicalRichTextPlugin>
+        <LexicalMarkdownPlugin :transformers="PLAYGROUND_TRANSFORMERS" />
     </LexicalComposer>
-
 </template>
-
+<!-- editor大概会变成一个vue组件，最好还是npm进行发布-->
 <script setup lang="ts">
 import LexicalComposer from "./LexicalComposer.vue"
 import LexicalRichTextPlugin from "./LexicalRichTextPlugin.vue"
+import LexicalMarkdownPlugin from "./LexicalMarkdownPlugin.vue"
 import LexicalContentEditable from "./LexicalContentEditable.vue";
 import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
 import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
-import { $createListItemNode, $createListNode } from '@lexical/list'
-import { $createLinkNode } from '@lexical/link'
 import { playgroundNodes } from "../type";
+import type {
+    Transformer,
+} from '@lexical/markdown'
+import {
+    CHECK_LIST,
+    ELEMENT_TRANSFORMERS,
+    TEXT_FORMAT_TRANSFORMERS,
+    TEXT_MATCH_TRANSFORMERS,
+} from '@lexical/markdown'
+
+
+const PLAYGROUND_TRANSFORMERS: Transformer[] = [
+    CHECK_LIST,
+    ...ELEMENT_TRANSFORMERS,
+    ...TEXT_FORMAT_TRANSFORMERS,
+    ...TEXT_MATCH_TRANSFORMERS,
+]
 
 function prepopulatedRichText() {
     const root = $getRoot();

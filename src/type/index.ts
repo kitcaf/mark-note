@@ -6,11 +6,11 @@ import { Klass, LexicalNode } from "lexical"
 
 export const playgroundNodes: Array<Klass<LexicalNode>> = [
     HeadingNode,
-    // ListNode,
-    // ListItemNode,
+    ListNode,
+    ListItemNode,
     QuoteNode,
-    // AutoLinkNode,
-    // LinkNode
+    AutoLinkNode,
+    LinkNode
 ]
 
 
