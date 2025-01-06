@@ -1,16 +1,16 @@
 <template>
-    <LexicalComposer :initialConfig="initialConfig">
-        <LexicalRichTextPlugin>
-            <div class="flex justify-center w-full bg-gray-200 min-h-screen">
-                <div class="w-6xl bg-white">
+    <div class="editor-container bg-white rounded-lg shadow-sm p-6">
+        <LexicalComposer :initialConfig="initialConfig">
+            <LexicalRichTextPlugin>
+                <div class="w-full">
                     <LexicalContentEditable />
                 </div>
-            </div>
-        </LexicalRichTextPlugin>
-        <LexicalMarkdownPlugin :transformers="PLAYGROUND_TRANSFORMERS" />
-    </LexicalComposer>
+            </LexicalRichTextPlugin>
+            <LexicalMarkdownPlugin :transformers="PLAYGROUND_TRANSFORMERS" />
+        </LexicalComposer>
+    </div>
 </template>
-<!-- editor大概会变成一个vue组件，最好还是npm进行发布-->
+
 <script setup lang="ts">
 import LexicalComposer from "./LexicalComposer.vue"
 import LexicalRichTextPlugin from "./LexicalRichTextPlugin.vue"
@@ -76,3 +76,9 @@ const initialConfig: CreateEditorArgs = {
     theme: basicTheme
 };
 </script>
+
+<style>
+.editor-container {
+    max-width: 800px;
+}
+</style>
