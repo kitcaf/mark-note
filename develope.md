@@ -77,6 +77,13 @@ contenteditable 是一个HTML属性【https://developer.mozilla.org/zh-CN/docs/W
 
 ### UI UI搭建一下
 
+（1）响应式
+
+- 中间拖动器
+- 整体相应式改变编辑器的宽高
+
+
+
 
 
 

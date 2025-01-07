@@ -33,15 +33,8 @@ onMounted(() => {
     display: block;
     position: relative;
     outline: 0;
-    padding: 8px 28px 40px;
+    /* height这个属性是要计算 */
     min-height: 150px;
     width: 100%;
-}
-
-@media (max-width: 1025px) {
-    .ContentEditable__root {
-        padding-left: 8px;
-        padding-right: 8px;
-    }
 }
 </style>

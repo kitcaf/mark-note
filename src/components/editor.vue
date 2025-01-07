@@ -1,5 +1,5 @@
 <template>
-    <div class="editor-container bg-white rounded-lg shadow-sm p-6">
+    <div class="editor-container">
         <LexicalComposer :initialConfig="initialConfig">
             <LexicalRichTextPlugin>
                 <div class="w-full">

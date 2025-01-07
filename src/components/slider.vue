@@ -1,15 +1,14 @@
 <template>
-    <div class="w-64 bg-[#fafafa] border-r border-gray-200">
+    <div class="bg-[#fafafa] border-r border-gray-200" :style="{ width: `${width}px` }">
         <div class="p-4">
-            <h1 class="text-xl font-semibold text-gray-800">kitcaf_note</h1>
             <!-- 搜索框 -->
             <div class="mt-4">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                        <i class="i-carbon-search text-gray-400"></i>
+                        <div class="i-carbon:search w-16px h-16px"></div>
                     </span>
-                    <input
-                        type="text"
+                    <input 
+                        type="text" 
                         placeholder="Search..."
                         class="w-full pl-10 pr-4 py-2 border rounded-lg bg-white focus:outline-none focus:border-blue-500"
                     >
@@ -29,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const sliderValue = ref(200); // 初始宽度，如果需要调整宽度可以使用
+defineProps<{
+    width: number
+}>();
 </script>
 
 <style scoped></style>
