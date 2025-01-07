@@ -4,11 +4,21 @@ import {
   presetIcons,
   presetUno,
   presetWebFonts,
+  transformerDirectives,
+  transformerVariantGroup,
 } from 'unocss'
 
 export default defineConfig({
   presets: [
-    presetUno(),
+    presetUno({
+      borderWidth: {
+        DEFAULT: '1px',
+        none: '0',
+        sm: '1px',
+        md: '2px',
+        lg: '3px',
+      },
+    }),
     presetAttributify(),
     presetIcons({
       scale: 1.2,
@@ -21,5 +31,9 @@ export default defineConfig({
         sans: 'Inter:400,600,700',
       },
     }),
+  ],
+  transformers: [
+    transformerDirectives(),
+    transformerVariantGroup(),
   ],
 })
