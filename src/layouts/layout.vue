@@ -1,19 +1,14 @@
 <template>
-    <div class="">
-        <Top :topHeight="topHeight" />
-        <router-view></router-view>
+    <div class="h-screen flex flex-col">
+        <Top :topHeight="32" />
+        <div class="flex-1">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
-
 <script setup lang="ts">
 import Top from '../components/top.vue';
-import { ref } from "vue"
-
-const topHeight = ref(100);
-
-
-
 </script>
 
 <style scoped></style>
