@@ -10,13 +10,6 @@
     "tauri": "tauri dev"
   },
   "dependencies": {
-    "@codemirror/commands": "^6.7.1",
-    "@codemirror/lang-markdown": "^6.3.1",
-    "@codemirror/language": "^6.10.6",
-    "@codemirror/language-data": "^6.5.1",
-    "@codemirror/merge": "^6.7.4",
-    "@codemirror/state": "^6.5.0",
-    "@codemirror/view": "^6.35.3",
     "@iconify-json/carbon": "^1.2.5",
     "@lexical/dragon": "^0.22.0",
     "@lexical/history": "^0.22.0",
@@ -30,6 +23,7 @@
     "@unocss/preset-icons": "^0.65.3",
     "@vueuse/core": "^12.0.0",
     "lexical": "^0.22.0",
+    "uuid": "^11.0.4",
     "vue": "^3.5.13",
     "vue-router": "4"
   },

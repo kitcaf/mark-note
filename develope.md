@@ -82,6 +82,12 @@ contenteditable 是一个HTML属性【https://developer.mozilla.org/zh-CN/docs/W
 - 中间拖动器
 - 整体相应式改变编辑器的宽高
 
+### 文件系统
+
+文件创建，保存，删除，文件的所有历史（用本软件打开的文件，或者保存了的文件-存一个链接就好了）
+
+#文件创建功能
+
 
 
 

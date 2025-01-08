@@ -80,5 +80,6 @@ onMounted(() => {
     editor.setEditable(true)
 })
 
+//这种方式只有这个组件的组件树可以使用，其他的组件区间的怎么访问
 provide(EDITOR_ID, editor)
 </script>

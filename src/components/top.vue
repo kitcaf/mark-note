@@ -12,35 +12,40 @@
         </div>
 
         <!-- 右侧 -->
-        <div class="flex items-center h-full">
-            <div class="flex items-center h-full">
+        <div class="flex items-center h-full relative">
+            <MenuDropdown :menuItems="menuItems">
                 <WindowControl icon-class="i-carbon:overflow-menu-horizontal" :height="props.topHeight" />
-                <WindowControl @click="minimizeWindow" icon-class="i-carbon:subtract" :height="props.topHeight" />
-                <!-- <WindowControl @click="maximizeWindow" icon-class="i-carbon:maximize" :height="props.topHeight" /> -->
-                <WindowControl @click="closeWindow" icon-class="i-carbon:close" :height="props.topHeight"
-                    :is-close="true" />
-            </div>
+            </MenuDropdown>
+            <WindowControl @click="minimizeWindow" icon-class="i-carbon:subtract" :height="props.topHeight" />
+            <WindowControl @click="closeWindow" icon-class="i-carbon:close" :height="props.topHeight"
+                :is-close="true" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import WindowControl from './WindowControl.vue';
+import MenuDropdown from './MenuDropdown.vue';
+import { ref } from 'vue';
 import { getCurrentWindow } from '@tauri-apps/api/window';
+import { createNewFile } from '../composables/newFile';
 
 const props = defineProps<{
     topHeight: number
 }>();
 
+const menuItems = ref([
+    { id: 1, label: '新建文件', action: createNewFile },
+    { id: 2, label: '打开文件', action: createNewFile },
+]);
+
 const closeWindow = async () => {
-    console.log('closeWindow')
     await getCurrentWindow().close();
-}
+};
 
 const minimizeWindow = async () => {
-    console.log('maximizeWindow')
     await getCurrentWindow().minimize();
-}
+};
 </script>
 
 <style scoped>
