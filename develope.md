@@ -88,6 +88,54 @@ contenteditable 是一个HTML属性【https://developer.mozilla.org/zh-CN/docs/W
 
 #文件创建功能
 
+（1）权限问题
+
+``` json
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "mark-note",
+  "version": "0.1.0",
+  "identifier": "com.mark-note.app",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "mark-note",
+        "decorations": false,
+        "transparent": false,
+        "width": 1000,
+        "height": 600,
+        "hiddenTitle": true,
+        "backgroundColor": "#111111",
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null,
+      //添加默认权限 - 指向capabilities/default.json权限系统
+      "capabilities": [
+        "default"
+      ]
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
+```
 
 
 

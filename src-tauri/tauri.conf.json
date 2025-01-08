@@ -16,14 +16,17 @@
         "decorations": false,
         "transparent": false,
         "width": 1000,
-        "height": 600,
+        "height": 800,
         "hiddenTitle": true,
         "backgroundColor": "#111111",
         "center": true
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "capabilities": [
+        "default"
+      ]
     }
   },
   "bundle": {

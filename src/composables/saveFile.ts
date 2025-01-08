@@ -25,7 +25,7 @@ export const saveFile = async () => {
             const editorState = JSON.stringify(
                 editor.getEditorState().toJSON()
             );
-
+            console.log(editorState)
             // 保存文件
             await writeTextFile(filePath, editorState);
 

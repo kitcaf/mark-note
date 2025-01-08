@@ -14,6 +14,17 @@
     "core:window:allow-minimize",
     "core:window:allow-toggle-maximize",
     "dialog:allow-save",
-    "dialog:deny-save"
+    "fs:default",
+    "fs:allow-write",
+    "fs:allow-read",
+    "fs:allow-create",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        {
+          "path": "**"
+        }
+      ]
+    }
   ]
 }
