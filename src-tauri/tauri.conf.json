@@ -15,7 +15,7 @@
         "title": "mark-note",
         "decorations": false,
         "transparent": false,
-        "width": 1200,
+        "width": 1000,
         "height": 600,
         "hiddenTitle": true,
         "backgroundColor": "#111111",

@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-white flex items-center justify-between" :style="{
+    <div data-tauri-drag-region class="bg-white flex items-center justify-between" :style="{
         height: props.topHeight + 'px',
-        borderBottom: '1px solid #e5e7eb'
+        borderBottom: '1px solid #e5e7eb',
     }">
         <!-- 左侧 -->
         <div class="flex items-center h-full">
@@ -14,23 +14,11 @@
         <!-- 右侧 -->
         <div class="flex items-center h-full">
             <div class="flex items-center h-full">
-                <WindowControl 
-                    icon-class="i-carbon:overflow-menu-horizontal"
-                    :height="props.topHeight"
-                />
-                <WindowControl 
-                    icon-class="i-carbon:subtract"
-                    :height="props.topHeight"
-                />
-                <WindowControl 
-                    icon-class="i-carbon:maximize"
-                    :height="props.topHeight"
-                />
-                <WindowControl 
-                    icon-class="i-carbon:close"
-                    :height="props.topHeight"
-                    :is-close="true"
-                />
+                <WindowControl icon-class="i-carbon:overflow-menu-horizontal" :height="props.topHeight" />
+                <WindowControl @click="minimizeWindow" icon-class="i-carbon:subtract" :height="props.topHeight" />
+                <!-- <WindowControl @click="maximizeWindow" icon-class="i-carbon:maximize" :height="props.topHeight" /> -->
+                <WindowControl @click="closeWindow" icon-class="i-carbon:close" :height="props.topHeight"
+                    :is-close="true" />
             </div>
         </div>
     </div>
@@ -38,8 +26,25 @@
 
 <script setup lang="ts">
 import WindowControl from './WindowControl.vue';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 
 const props = defineProps<{
     topHeight: number
 }>();
+
+const closeWindow = async () => {
+    console.log('closeWindow')
+    await getCurrentWindow().close();
+}
+
+const minimizeWindow = async () => {
+    console.log('maximizeWindow')
+    await getCurrentWindow().minimize();
+}
 </script>
+
+<style scoped>
+div[data-tauri-drag-region] {
+    -webkit-app-region: drag;
+}
+</style>
