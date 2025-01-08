@@ -21,7 +21,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": [
+      "@tauri-apps/api"
+    ]
   },
   "include": [
     "src/**/*.ts",

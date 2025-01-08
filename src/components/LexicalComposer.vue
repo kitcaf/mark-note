@@ -8,6 +8,7 @@ import type { CreateEditorArgs, LexicalEditor, EditorState } from "lexical"
 import { $createParagraphNode, $getRoot, createEditor, $getSelection } from 'lexical';
 import { onMounted, provide } from 'vue';
 import { EDITOR_ID } from '../type';
+import { useEditorStore } from '../stores/editor';
 
 const emit = defineEmits<{
     (e: 'error', error: Error, editor: LexicalEditor): void
@@ -82,4 +83,6 @@ onMounted(() => {
 
 //这种方式只有这个组件的组件树可以使用，其他的组件区间的怎么访问
 provide(EDITOR_ID, editor)
+const editorStore = useEditorStore();
+editorStore.setEditor(editor);
 </script>

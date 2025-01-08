@@ -1,21 +1,29 @@
-import { $getRoot } from 'lexical';
-import { useLexicalComposer } from './useLexicalComposer';
-import { v4 as uuidv4 } from 'uuid'; // 确保安装了 uuid 库
+import { useEditorStore } from '../stores/editor';
+import { useFileStore } from '../stores/file';
+import { v4 as uuidv4 } from 'uuid';
 
-export const createNewFile = () => {
-    console.log('createNewFile');
-    const editor = useLexicalComposer();
-    //新建文件夹之前的文件是否保存的判断
+export const createNewFile = async () => {
+    const editorStore = useEditorStore();
+    const fileStore = useFileStore();
 
+    // 再创建之前还是要对当前状态的编辑器进行状态判断
+    // (1) 如果没有保存，弹出保存对话框
+    // (2) 如果已经保存，则可以新建文件
+    try {
+        // 等待编辑器清空完成
+        await editorStore.clearEditor();
 
-    // 清空 editor 的状态
-    editor.update(() => {
-        const root = $getRoot();
-        root.clear(); // 清空内容
-    });
+        // 生成新文件名并更新状态
+        const fileName = `${uuidv4()}_未命名.kc`;
+        fileStore.setCurrentFile({
+            fileName,
+            filePath: null,
+            isSaved: false,
+            isNew: true
+        });
 
-    // 生成新的文件名
-    const fileName = `${uuidv4()}_未命名.kc`; // 使用 UUID 生成唯一文件名
-
-    return fileName; // 返回新文件名
+        return fileName;
+    } catch (error) {
+        console.error('创建新文件失败:', error);
+    }
 };

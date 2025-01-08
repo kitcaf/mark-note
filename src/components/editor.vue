@@ -29,7 +29,7 @@ import {
     TEXT_MATCH_TRANSFORMERS,
 } from '@lexical/markdown'
 import basicTheme from "../theme/playgroundtheme";
-
+import { useKeyboardShortcuts } from '../composables/useKeyboardShortcuts';
 
 const PLAYGROUND_TRANSFORMERS: Transformer[] = [
     CHECK_LIST,
@@ -75,6 +75,9 @@ const initialConfig: CreateEditorArgs = {
     nodes: [...playgroundNodes],
     theme: basicTheme
 };
+
+// 使用快捷键
+useKeyboardShortcuts();
 </script>
 
 <style>
