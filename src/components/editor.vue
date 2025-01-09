@@ -29,6 +29,7 @@ import {
 } from '@lexical/markdown'
 import basicTheme from "../theme/playgroundtheme";
 import { useKeyboardShortcuts } from '../composables/useKeyboardShortcuts';
+import { FileNameNode } from '../nodes/FileNameNode';
 
 const PLAYGROUND_TRANSFORMERS: Transformer[] = [
     CHECK_LIST,
@@ -50,7 +51,7 @@ const initialConfig: CreateEditorArgs = {
     namespace: 'note-editor',
     editorState: prepopulatedRichText as any,
     editable: true,
-    nodes: [...playgroundNodes],
+    nodes: [...playgroundNodes, FileNameNode],
     theme: basicTheme
 };
 

@@ -1,20 +1,18 @@
 import { useEditorStore } from '../stores/editor';
 import { useFileStore } from '../stores/file';
-import { v4 as uuidv4 } from 'uuid';
+import { formatDate } from '../utils/time';
+
 
 export const createNewFile = async () => {
     const editorStore = useEditorStore();
     const fileStore = useFileStore();
-    // 再创建之前还是要对当前状态的编辑器进行状态判断
-    // (1) 如果没有保存，弹出保存对话框
-    // (2) 如果已经保存，则可以新建文件
-    console.log("创建新的文件 editorStore", editorStore)
-    try {
-        // 等待编辑器清空完成
-        await editorStore.initEditor();
 
-        // 生成新文件名并更新状态
-        const fileName = `${uuidv4()}_未命名.kc`;
+    try {
+
+        const fileName = `${Date.now()}无标题的`;
+        console.log(fileName)
+        await editorStore.initEditor(fileName);
+
         fileStore.setCurrentFile({
             fileName,
             filePath: null,

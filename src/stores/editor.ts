@@ -1,8 +1,10 @@
+import { HeadingNode } from '@lexical/rich-text';
 import { defineStore } from 'pinia';
-import { $getRoot, $createParagraphNode, type LexicalEditor, createEditor } from 'lexical';
+import { $getRoot, $createParagraphNode, type LexicalEditor, createEditor, $createTextNode, $getSelection } from 'lexical';
 import { useFileStore } from './file';
 import { ref } from 'vue';
 import { useMounted } from '../composables/useMounted';
+import { $createFileNameNode } from '../nodes/FileNameNode';
 
 export const useEditorStore = defineStore('editor', () => {
     const editor = ref<ReturnType<typeof createEditor> | null>(null);
@@ -18,23 +20,20 @@ export const useEditorStore = defineStore('editor', () => {
                 if (fileStore.currentFile.isSaved) {
                     fileStore.setCurrentFile({ isSaved: false });
                 }
-
             })
         })
 
     }
 
-    async function initEditor() {
+    async function initEditor(filename: string) {
         if (editor.value) {
             return new Promise<void>((resolve) => {
                 editor.value!.update(() => {
-                    // 创建一个新的空段落节点
-                    $getRoot().clear();
-
+                    const root = $getRoot();
+                    root.clear();
                     const paragraph = $createParagraphNode();
-                    // paragraph.append($createHeadingNode('h1'));
-                    // 设置为根节点的唯一子节点
-                    $getRoot().append(paragraph);
+
+                    root.append(paragraph);
                     resolve();
                 });
             });

@@ -13,31 +13,27 @@
             </div>
             <!-- 历史文件列表 -->
             <div class="space-y-2 mt-3">
-                <div v-for="file in historyStore.fileHistory" 
-                    :key="file.filePath"
-                    class="flex items-center justify-between p-2 rounded cursor-pointer"
-                    :class="[
-                        isCurrentFile(file.filePath) 
-                            ? 'bg-blue-50 text-blue-600' 
+                <div v-for="file in historyStore.fileHistory" :key="file.filePath"
+                    class="flex items-center justify-between p-2 rounded cursor-pointer" :class="[
+                        isCurrentFile(file.filePath)
+                            ? 'bg-blue-50 text-blue-600'
                             : 'hover:bg-gray-100'
-                    ]"
-                    @click="handleFileClick(file)">
+                    ]" @click="handleFileClick(file)">
                     <div class="flex items-center space-x-2">
                         <span class="text-sm" :class="[
-                            isCurrentFile(file.filePath) 
-                                ? 'text-blue-600' 
+                            isCurrentFile(file.filePath)
+                                ? 'text-blue-600'
                                 : 'text-gray-600'
                         ]">
-                            {{ formatFileName(file.fileName) }}
+                            {{ file.fileName }}
                         </span>
                     </div>
                     <!-- 删除按钮 -->
-                    <button @click.stop="handleDeleteHistory(file.filePath)" 
-                        :class="[
-                            isCurrentFile(file.filePath)
-                                ? 'text-blue-400 hover:text-blue-600'
-                                : 'text-gray-400 hover:text-gray-600'
-                        ]">
+                    <button @click.stop="handleDeleteHistory(file.filePath)" :class="[
+                        isCurrentFile(file.filePath)
+                            ? 'text-blue-400 hover:text-blue-600'
+                            : 'text-gray-400 hover:text-gray-600'
+                    ]">
                         <div class="i-carbon:close text-sm"></div>
                     </button>
                 </div>
@@ -61,15 +57,6 @@ const fileStore = useFileStore();
 // 检查是否是当前文件
 function isCurrentFile(filePath: string) {
     return fileStore.currentFile.filePath === filePath;
-}
-
-// 格式化文件名（移除UUID前缀）
-function formatFileName(fileName: string) {
-    try {
-        return fileName.split('_')[1].split('.')[0];
-    } catch (error) {
-        return fileName;
-    }
 }
 
 // 处理文件点击

@@ -26,13 +26,16 @@ import Resizer from '../components/Resizer.vue';
 import { loadFile } from '../composables/loadFile';
 import { createNewFile } from '../composables/newFile';
 import { useHistoryStore } from '../stores/history';
+import { useFileStore } from '../stores/file';
 
+const fileStore = useFileStore();
 const historyStore = useHistoryStore();
 const sliderWidth = ref(256); // 初始宽度
 
 const handleResize = (width: number) => {
     sliderWidth.value = width;
 };
+
 
 // 处理编辑器就绪
 async function handleEditorReady() {
