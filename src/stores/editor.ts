@@ -8,7 +8,6 @@ export const useEditorStore = defineStore('editor', () => {
     const editor = ref<ReturnType<typeof createEditor> | null>(null);
 
     function setEditor(editorInstance: ReturnType<typeof createEditor>) {
-        console.log("editorInstance 初始化", editorInstance)
         editor.value = editorInstance;
         const fileStore = useFileStore();
 

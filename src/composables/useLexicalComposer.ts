@@ -5,7 +5,6 @@ import { EDITOR_ID } from "../type"
 
 export function useLexicalComposer(): LexicalEditor {
     const editor = inject<LexicalEditor>(EDITOR_ID)
-    console.log('useLexicalComposer', editor);
     if (!editor) {
         throw new Error("LexicalComposer is not provided")
     }

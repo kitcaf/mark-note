@@ -3,8 +3,7 @@
         <div class="flex items-center text-sm text-gray-600">
             <span>目录</span>
             <span class="mx-2">/</span>
-            <!-- <span v-show="fileStore.currentFile.fileName != ''">{{
-                fileStore.currentFile.fileName.split('_')[1].split('.')[0] }}</span> -->
+            <span>{{ fileStore.currentFile.fileName }}</span>
             <span v-show="fileStore.currentFile.isSaved">*</span>
         </div>
     </div>

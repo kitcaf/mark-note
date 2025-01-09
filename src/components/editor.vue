@@ -29,7 +29,6 @@ import {
 } from '@lexical/markdown'
 import basicTheme from "../theme/playgroundtheme";
 import { useKeyboardShortcuts } from '../composables/useKeyboardShortcuts';
-import { onMounted } from 'vue';
 
 const PLAYGROUND_TRANSFORMERS: Transformer[] = [
     CHECK_LIST,

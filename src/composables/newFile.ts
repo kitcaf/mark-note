@@ -8,7 +8,7 @@ export const createNewFile = async () => {
     // 再创建之前还是要对当前状态的编辑器进行状态判断
     // (1) 如果没有保存，弹出保存对话框
     // (2) 如果已经保存，则可以新建文件
-
+    console.log("创建新的文件 editorStore", editorStore)
     try {
         // 等待编辑器清空完成
         await editorStore.clearEditor();

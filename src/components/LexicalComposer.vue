@@ -88,14 +88,13 @@ onMounted(() => {
 //这种方式只有这个组件的组件树可以使用，其他的组件区间的怎么访问
 provide(EDITOR_ID, editor)
 const editorStore = useEditorStore();
-console.log("editorStore 初始化", editorStore, editor)
 editorStore.setEditor(editor);
 
 // 在编辑器真正初始化完成后发出事件
 onMounted(() => {
-  // 确保编辑器已经初始化
-  if (editorStore.editor) {
-    window.dispatchEvent(new CustomEvent('editor-ready'));
-  }
+    // 确保编辑器已经初始化
+    if (editorStore.editor) {
+        window.dispatchEvent(new CustomEvent('editor-ready'));
+    }
 });
 </script>
