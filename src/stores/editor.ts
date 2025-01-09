@@ -12,12 +12,12 @@ export const useEditorStore = defineStore('editor', () => {
         const fileStore = useFileStore();
 
         // 监听编辑器变化
-        useMounted(() => {
-            return editorInstance.registerUpdateListener(() => {
-                if (fileStore.currentFile.isSaved) {
-                    fileStore.setCurrentFile({ isSaved: false });
-                }
-            });
+        editorInstance.registerUpdateListener(({ editorState }) => {
+            console.log('编辑器状态改变中')
+            if (fileStore.currentFile.isSaved) {
+                fileStore.setCurrentFile({ isSaved: false });
+            }
+
         })
     }
 

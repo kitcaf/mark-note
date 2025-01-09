@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-export interface FileState {
+interface FileState {
     fileName: string;
     filePath: string | null;
     isSaved: boolean;
@@ -13,25 +13,18 @@ export const useFileStore = defineStore('file', () => {
         fileName: '',
         filePath: null,
         isSaved: true,
-        isNew: false
+        isNew: true
     });
 
     function setCurrentFile(file: Partial<FileState>) {
-        currentFile.value = { ...currentFile.value, ...file };
-    }
-
-    function resetFile() {
         currentFile.value = {
-            fileName: '',
-            filePath: null,
-            isSaved: true,
-            isNew: false
+            ...currentFile.value,
+            ...file
         };
     }
 
     return {
         currentFile,
-        setCurrentFile,
-        resetFile
+        setCurrentFile
     };
 }); 

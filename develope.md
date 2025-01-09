@@ -140,7 +140,7 @@ contenteditable 是一个HTML属性【https://developer.mozilla.org/zh-CN/docs/W
 
 保存数据、加载数据
 
-
+计算属性处理值没有初始化完的问题
 
 
 
