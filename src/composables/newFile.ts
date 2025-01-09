@@ -11,7 +11,7 @@ export const createNewFile = async () => {
     console.log("创建新的文件 editorStore", editorStore)
     try {
         // 等待编辑器清空完成
-        await editorStore.clearEditor();
+        await editorStore.initEditor();
 
         // 生成新文件名并更新状态
         const fileName = `${uuidv4()}_未命名.kc`;

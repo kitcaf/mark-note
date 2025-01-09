@@ -3,7 +3,7 @@ import { writeTextFile } from '@tauri-apps/plugin-fs';
 import { useEditorStore } from '../stores/editor';
 import { useFileStore } from '../stores/file';
 import { useHistoryStore } from '../stores/history';
-import { removeExtension } from '../utils/fileUtils';
+import { extractFileNameWithoutExtension } from '../utils/fileUtils';
 
 export const saveFile = async () => {
     const editorStore = useEditorStore();
@@ -30,7 +30,7 @@ export const saveFile = async () => {
             await writeTextFile(filePath, editorState);
 
             //提取文件名
-            const fileName = removeExtension(filePath)
+            const fileName = extractFileNameWithoutExtension(filePath)
             // 更新文件状态
             fileStore.setCurrentFile({
                 fileName,

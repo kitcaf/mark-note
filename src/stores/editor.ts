@@ -11,23 +11,28 @@ export const useEditorStore = defineStore('editor', () => {
         editor.value = editorInstance;
         const fileStore = useFileStore();
 
-        // 监听编辑器变化
-        editorInstance.registerUpdateListener(({ editorState }) => {
-            console.log('编辑器状态改变中')
-            if (fileStore.currentFile.isSaved) {
-                fileStore.setCurrentFile({ isSaved: false });
-            }
+        useMounted(() => {
+            //监听编辑器变化
+            return editorInstance.registerUpdateListener(({ }) => {
+                console.log('编辑器状态改变中')
+                if (fileStore.currentFile.isSaved) {
+                    fileStore.setCurrentFile({ isSaved: false });
+                }
 
+            })
         })
+
     }
 
-    async function clearEditor() {
+    async function initEditor() {
         if (editor.value) {
             return new Promise<void>((resolve) => {
                 editor.value!.update(() => {
                     // 创建一个新的空段落节点
                     $getRoot().clear();
+
                     const paragraph = $createParagraphNode();
+                    // paragraph.append($createHeadingNode('h1'));
                     // 设置为根节点的唯一子节点
                     $getRoot().append(paragraph);
                     resolve();
@@ -47,7 +52,7 @@ export const useEditorStore = defineStore('editor', () => {
     return {
         editor,
         setEditor,
-        clearEditor,
+        initEditor,
         getEditorInstance
     };
 }); 

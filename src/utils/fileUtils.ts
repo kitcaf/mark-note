@@ -14,6 +14,21 @@ export function extractFileName(filePath: string): string {
 }
 
 /**
+ * 从文件路径中提取文件名（包含扩展名）
+ * @param filePath 文件路径
+ * @returns 文件名
+ */
+export function extractFileNameWithoutExtension(filePath: string): string {
+    try {
+        const pathParts = filePath.split(/[/\\]/); // 同时处理正斜杠和反斜杠
+        return pathParts[pathParts.length - 1].split('.')[0];
+    } catch (error) {
+        console.error('Error extracting filename:', error);
+        return filePath;
+    }
+}
+
+/**
  * 从文件名中提取不带扩展名的部分
  * @param fileName 文件名
  * @returns 不带扩展名的文件名
