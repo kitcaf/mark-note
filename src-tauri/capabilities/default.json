@@ -15,14 +15,21 @@
     "core:window:allow-toggle-maximize",
     "dialog:allow-save",
     "fs:default",
-    "fs:allow-write",
-    "fs:allow-read",
-    "fs:allow-create",
+    "fs:allow-write-file",
+    "fs:allow-read-file",
+    "fs:read-all",
+    "fs:write-all",
     {
       "identifier": "fs:scope",
       "allow": [
         {
+          "path": "/**"
+        },
+        {
           "path": "**"
+        },
+        {
+          "path": "$HOME/**"
         }
       ]
     }

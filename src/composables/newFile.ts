@@ -5,10 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 export const createNewFile = async () => {
     const editorStore = useEditorStore();
     const fileStore = useFileStore();
-
     // 再创建之前还是要对当前状态的编辑器进行状态判断
     // (1) 如果没有保存，弹出保存对话框
     // (2) 如果已经保存，则可以新建文件
+
     try {
         // 等待编辑器清空完成
         await editorStore.clearEditor();
