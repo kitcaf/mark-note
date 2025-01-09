@@ -1,6 +1,6 @@
 <template>
     <div class="editor-container">
-        <LexicalComposer :initialConfig="initialConfig">
+        <LexicalComposer :initialConfig="initialConfig" @editor-ready="handleEditorReady">
             <LexicalRichTextPlugin>
                 <div class="w-full">
                     <LexicalContentEditable />
@@ -16,8 +16,7 @@ import LexicalComposer from "./LexicalComposer.vue"
 import LexicalRichTextPlugin from "./LexicalRichTextPlugin.vue"
 import LexicalMarkdownPlugin from "./LexicalMarkdownPlugin.vue"
 import LexicalContentEditable from "./LexicalContentEditable.vue";
-import { $createParagraphNode, $createTextNode, $getRoot, CreateEditorArgs } from "lexical";
-import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
+import { $createParagraphNode, $getRoot, CreateEditorArgs } from "lexical";
 import { playgroundNodes } from "../type";
 import type {
     Transformer,
@@ -30,6 +29,7 @@ import {
 } from '@lexical/markdown'
 import basicTheme from "../theme/playgroundtheme";
 import { useKeyboardShortcuts } from '../composables/useKeyboardShortcuts';
+import { onMounted } from 'vue';
 
 const PLAYGROUND_TRANSFORMERS: Transformer[] = [
     CHECK_LIST,
@@ -43,28 +43,7 @@ function prepopulatedRichText() {
     if (root.getFirstChild() !== null) {
         return;
     }
-
-    const heading = $createHeadingNode('h1');
-    heading.append($createTextNode('Welcome to the Vanilla JS Lexical Demo!'));
-    root.append(heading);
-    const quote = $createQuoteNode();
-    quote.append(
-        $createTextNode(
-            `In case you were wondering what the text area at the bottom is – it's the debug view, showing the current state of the editor. `,
-        ),
-    );
-    root.append(quote);
     const paragraph = $createParagraphNode();
-    paragraph.append(
-        $createTextNode('This is a demo environment built with '),
-        $createTextNode('lexical').toggleFormat('code'),
-        $createTextNode('.'),
-        $createTextNode(' Try typing in '),
-        $createTextNode('some text').toggleFormat('bold'),
-        $createTextNode(' with '),
-        $createTextNode('different').toggleFormat('italic'),
-        $createTextNode(' formats.'),
-    );
     root.append(paragraph);
 }
 
@@ -76,8 +55,18 @@ const initialConfig: CreateEditorArgs = {
     theme: basicTheme
 };
 
+
 // 使用快捷键
 useKeyboardShortcuts();
+
+const emit = defineEmits<{
+    (e: 'kc-editor-ready'): void
+}>();
+
+// 处理编辑器就绪事件
+const handleEditorReady = () => {
+    emit('kc-editor-ready');
+};
 </script>
 
 <style>
