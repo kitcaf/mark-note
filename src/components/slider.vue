@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-[#fafafa] border-r border-gray-200" :style="{ width: `${width}px` }">
-        <div class="p-4">
-            <!-- 搜索框 -->
+    <div class="bg-gray-50 h-full border-r" :style="{ width: width + 'px' }">
+        <div class="px-4">
+
             <div class="mt-2">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -11,20 +11,84 @@
                         class="w-full pl-10 pr-4 py-2 border rounded-lg bg-white focus:outline-none focus:border-blue-500">
                 </div>
             </div>
-            <!-- 导航菜单 -->
-            <nav class="mt-6">
-                <span to="/" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-                    Welcome
-                </span>
-            </nav>
+            <!-- 历史文件列表 -->
+            <div class="space-y-2 mt-3">
+                <div v-for="file in historyStore.fileHistory" 
+                    :key="file.filePath"
+                    class="flex items-center justify-between p-2 rounded cursor-pointer"
+                    :class="[
+                        isCurrentFile(file.filePath) 
+                            ? 'bg-blue-50 text-blue-600' 
+                            : 'hover:bg-gray-100'
+                    ]"
+                    @click="handleFileClick(file)">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm" :class="[
+                            isCurrentFile(file.filePath) 
+                                ? 'text-blue-600' 
+                                : 'text-gray-600'
+                        ]">
+                            {{ formatFileName(file.fileName) }}
+                        </span>
+                    </div>
+                    <!-- 删除按钮 -->
+                    <button @click.stop="handleDeleteHistory(file.filePath)" 
+                        :class="[
+                            isCurrentFile(file.filePath)
+                                ? 'text-blue-400 hover:text-blue-600'
+                                : 'text-gray-400 hover:text-gray-600'
+                        ]">
+                        <div class="i-carbon:close text-sm"></div>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { useHistoryStore } from '../stores/history';
+import { useFileStore } from '../stores/file';
+import { loadFile } from '../composables/loadFile';
+
+const props = defineProps<{
     width: number
 }>();
+
+const historyStore = useHistoryStore();
+const fileStore = useFileStore();
+
+// 检查是否是当前文件
+function isCurrentFile(filePath: string) {
+    return fileStore.currentFile.filePath === filePath;
+}
+
+// 格式化文件名（移除UUID前缀）
+function formatFileName(fileName: string) {
+    try {
+        return fileName.split('_')[1].split('.')[0];
+    } catch (error) {
+        return fileName;
+    }
+}
+
+// 处理文件点击
+async function handleFileClick(file: { fileName: string; filePath: string }) {
+    try {
+        await loadFile(file.filePath, file.fileName);
+    } catch (error) {
+        console.error('Failed to load file:', error);
+    }
+}
+
+// 处理删除历史记录
+async function handleDeleteHistory(filePath: string) {
+    try {
+        await historyStore.removeHistory(filePath);
+    } catch (error) {
+        console.error('Failed to remove history:', error);
+    }
+}
 </script>
 
 <style scoped></style>

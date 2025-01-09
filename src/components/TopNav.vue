@@ -2,11 +2,11 @@
     <div class="flex items-center justify-between px-4 py-2 border-b">
         <!-- 左侧文件名 -->
         <div class="flex items-center">
-            <span class="text-sm text-gray-600">
-                目录
+            <span class="text-sm text-gray-400">
+                ...
             </span>
-            <span>/</span>
-            <span class="text-sm text-gray-600">
+            <span class="mx-2">/</span>
+            <span class="text-sm text-gray-400">
                 {{ fileName }}
             </span>
             <span v-if="!fileStore.currentFile.isSaved" class="ml-1 text-sm text-gray-400">
@@ -29,12 +29,6 @@ const fileStore = useFileStore();
 // 计算属性：处理文件名显示
 const fileName = computed(() => {
     const name = fileStore.currentFile?.fileName || '1_未命名.kc';
-    // 安全地处理文件名
-    try {
-        return name.split('_')[1].split('.')[0]
-    } catch (error) {
-        console.error('Error processing filename:', error);
-        return '未命名';
-    }
+    return name
 });
 </script>
