@@ -1,6 +1,5 @@
-import { HeadingNode } from '@lexical/rich-text';
 import { defineStore } from 'pinia';
-import { $getRoot, $createParagraphNode, type LexicalEditor, createEditor, $createTextNode, $getSelection, LexicalNode, KEY_ENTER_COMMAND, $isRangeSelection } from 'lexical';
+import { $getRoot, $createParagraphNode, type LexicalEditor, createEditor, $getSelection, LexicalNode, KEY_ENTER_COMMAND, $isRangeSelection } from 'lexical';
 import { useFileStore } from './file';
 import { ref } from 'vue';
 import { useMounted } from '../composables/useMounted';
@@ -16,7 +15,6 @@ export const useEditorStore = defineStore('editor', () => {
         useMounted(() => {
             // 原有的监听器
             const updateListener = editorInstance.registerUpdateListener(() => {
-                console.log('编辑器状态改变中')
                 if (fileStore.currentFile.isSaved) {
                     fileStore.setCurrentFile({ isSaved: false });
                 }
@@ -59,7 +57,7 @@ export const useEditorStore = defineStore('editor', () => {
                     paragraph.append(fileNameNode);
                     root.append(paragraph);
 
-                    // // 选中文件名
+                    // 选中文件名
                     // const selection = $getSelection();
                     // if (selection) {
                     //     fileNameNode.selectNext();
@@ -72,7 +70,6 @@ export const useEditorStore = defineStore('editor', () => {
     }
 
     function getEditorInstance(): ReturnType<typeof createEditor> {
-        console.log("editor.value", editor.value)
         if (!editor.value) {
             throw new Error('Editor not initialized');
         }

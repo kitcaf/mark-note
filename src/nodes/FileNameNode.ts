@@ -72,7 +72,6 @@ export class FileNameNode extends TextNode implements LexicalNode {
     insertNewAfter(selection?: RangeSelection): ParagraphNode {
         const paragraph = $createParagraphNode();
         const textContent = this.getTextContent();
-        console.log("输入回车键", textContent);
 
         // 如果文本为空，设置默认文本并将光标移到新段落
         if (textContent === '') {
@@ -111,7 +110,6 @@ export class FileNameNode extends TextNode implements LexicalNode {
     // 阻止节点被删除
     remove(): boolean {
         const text = this.getTextContent();
-        console.log("remove", text);
         this.updateFileName();
         if (!text) {
             return false; // 直接返回 false，不设置文本
@@ -151,7 +149,7 @@ export class FileNameNode extends TextNode implements LexicalNode {
     }
 
     // // 选中当前节点的文本
-    // selectNext(): void {
+    // selectNext(anchorOffset?: number, focusOffset?: number): RangeSelection {
     //     const selection = $createRangeSelection();
     //     selection.anchor.set(this.getKey(), 0, 'text');
     //     selection.focus.set(this.getKey(), this.getTextContentSize(), 'text');

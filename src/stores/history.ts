@@ -20,7 +20,6 @@ export const useHistoryStore = defineStore('history', () => {
             const appDataDirPath = await appDataDir();
             const storePath = await join(appDataDirPath, '.settings.dat');
             store = await Store.load(storePath);
-            console.log(store)
             await loadHistory();
         }
     }
@@ -33,7 +32,6 @@ export const useHistoryStore = defineStore('history', () => {
             if (history) {
                 fileHistory.value = history as FileHistory[];
             }
-            console.log(fileHistory.value)
         } catch (error) {
             console.error('Failed to load history:', error);
         }
@@ -69,7 +67,6 @@ export const useHistoryStore = defineStore('history', () => {
                 lastAccessed: Date.now()
             });
         }
-        console.log("保存文件历史记录", fileHistory.value)
         // 保持最近的 10 条记录
         fileHistory.value = fileHistory.value
             .sort((a, b) => b.lastAccessed - a.lastAccessed)
