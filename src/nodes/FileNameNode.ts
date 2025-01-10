@@ -1,5 +1,6 @@
-import { TextNode, NodeKey, SerializedTextNode, $createTextNode, $createParagraphNode, ParagraphNode, RangeSelection, EditorConfig, LexicalEditor, LexicalNode, $createRangeSelection, $setSelection, $getSelection, $isRangeSelection, KEY_ENTER_COMMAND } from 'lexical';
+import { TextNode, NodeKey, SerializedTextNode, $createTextNode, $createParagraphNode, ParagraphNode, RangeSelection, EditorConfig, LexicalEditor, LexicalNode, $createRangeSelection, $setSelection, $getSelection, $isRangeSelection, KEY_ENTER_COMMAND, $getRoot } from 'lexical';
 import { useFileStore } from '../stores/file';
+import { $convertFromMarkdownString } from '@lexical/markdown';
 
 export type SerializedFileNameNode = SerializedTextNode;
 
@@ -68,21 +69,21 @@ export class FileNameNode extends TextNode implements LexicalNode {
         }
     }
 
-    // 处理回车键：创建新段落
+    // fileNameNode处理回车键
     insertNewAfter(selection?: RangeSelection): ParagraphNode {
         const paragraph = $createParagraphNode();
         const textContent = this.getTextContent();
+        const root = $getRoot();
 
-        // 如果文本为空，设置默认文本并将光标移到新段落
+        // 如果文本为空，设置默认文本并创建新段落
         if (textContent === '') {
             this.setTextContent('未命名文件');
-            this.insertAfter(paragraph);
+            root.append(paragraph);
             // 强制选中新段落
             const range = $createRangeSelection();
             range.anchor.set(paragraph.getKey(), 0, 'element');
             range.focus.set(paragraph.getKey(), 0, 'element');
             $setSelection(range);
-            return paragraph;
         }
 
         // 处理有选中文本的情况
@@ -98,7 +99,9 @@ export class FileNameNode extends TextNode implements LexicalNode {
             }
         }
 
-        this.insertAfter(paragraph);
+        // 将新段落添加到 root，主要要加入到root中
+        root.append(paragraph);
+
         // 强制选中新段落
         const range = $createRangeSelection();
         range.anchor.set(paragraph.getKey(), 0, 'element');

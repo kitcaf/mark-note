@@ -3,7 +3,6 @@ import { ListItemNode, ListNode } from "@lexical/list"
 import { HeadingNode, QuoteNode } from "@lexical/rich-text"
 import { Klass, LexicalNode } from "lexical"
 
-
 export const playgroundNodes: Array<Klass<LexicalNode>> = [
     HeadingNode,
     ListNode,
@@ -12,7 +11,6 @@ export const playgroundNodes: Array<Klass<LexicalNode>> = [
     AutoLinkNode,
     LinkNode
 ]
-
 
 export const EDITOR_ID = "EDITOR_LEXICAL"
 

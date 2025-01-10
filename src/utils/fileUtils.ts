@@ -1,3 +1,9 @@
+import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
+import { useEditorStore } from "../stores/editor";
+import { useFileStore } from "../stores/file";
+import { save } from "@tauri-apps/plugin-dialog";
+import { useHistoryStore } from "../stores/history";
+
 /**
  * 从文件路径中提取文件名（包含扩展名）
  * @param filePath 文件路径
@@ -69,4 +75,106 @@ export function getExtension(fileName: string): string {
         console.error('Error getting extension:', error);
         return '';
     }
-} 
+}
+
+/**
+ * 加载文件到编辑器中
+ * @param filePath 文件路径
+ * @param fileName 文件名
+ */
+export async function loadFile(filePath: string, fileName: string) {
+    const editorStore = useEditorStore();
+    const fileStore = useFileStore();
+
+    try {
+        // 读取文件内容
+        const content = await readTextFile(filePath);
+
+        // 设置编辑器状态
+        const editor = editorStore.getEditorInstance();
+        editor.setEditorState(editor.parseEditorState(content));
+
+        // 更新文件状态
+        fileStore.setCurrentFile({
+            fileName,
+            filePath,
+            isSaved: true,
+            isNew: false
+        });
+    } catch (error) {
+        console.error('Failed to load file:', error);
+        throw error;
+    }
+}
+
+export const createNewFile = async () => {
+    const editorStore = useEditorStore();
+    const fileStore = useFileStore();
+
+    try {
+        const fileName = `未命名文件`;
+        await editorStore.initEditor(fileName);
+
+        fileStore.setCurrentFile({
+            fileName,
+            filePath: null,
+            isSaved: false,
+            isNew: true
+        });
+
+        return fileName;
+    } catch (error) {
+        console.error('创建新文件失败:', error);
+    }
+};
+
+export const saveFile = async () => {
+    const editorStore = useEditorStore();
+    const fileStore = useFileStore();
+    const historyStore = useHistoryStore();
+    const editor = editorStore.getEditorInstance();
+
+    try {
+        if (fileStore.currentFile.isNew || !fileStore.currentFile.filePath) {
+            const filePath = await save({
+                filters: [{
+                    name: 'Knowledge Canvas',
+                    extensions: ['kc']
+                }],
+                defaultPath: fileStore.currentFile.fileName
+            });
+
+            if (!filePath) return;
+
+            const editorState = JSON.stringify(
+                editor.getEditorState().toJSON()
+            );
+
+            await writeTextFile(filePath, editorState);
+
+            //提取文件名
+            const fileName = extractFileNameWithoutExtension(filePath)
+            // 更新文件状态
+            fileStore.setCurrentFile({
+                fileName,
+                filePath,
+                isSaved: true,
+                isNew: false
+            });
+
+            // 添加到历史记录
+            await historyStore.addHistory(fileStore.currentFile.fileName, filePath);
+        } else {
+            const editorState = JSON.stringify(
+                editor.getEditorState().toJSON()
+            );
+            await writeTextFile(fileStore.currentFile.filePath, editorState);
+            fileStore.setCurrentFile({ isSaved: true });
+        }
+
+
+
+    } catch (error) {
+        console.error('保存文件失败:', error);
+    }
+}; 

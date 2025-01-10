@@ -28,11 +28,12 @@ import WindowControl from './WindowControl.vue';
 import MenuDropdown from './MenuDropdown.vue';
 import { ref } from 'vue';
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import { createNewFile } from '../composables/newFile';
+
 import { useHistoryStore } from '../stores/history';
 import { useFileStore } from '../stores/file';
 import { ask } from '@tauri-apps/plugin-dialog';
-import { saveFile } from '../composables/saveFile';
+import { createNewFile, saveFile } from '../utils/fileUtils';
+
 
 const props = defineProps<{
     topHeight: number
@@ -64,7 +65,7 @@ async function saveCurrentState() {
             return true;
         }
         // 用户选择不保存
-        return false;
+        return true;
     }
 }
 

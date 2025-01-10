@@ -82,6 +82,7 @@ export const useHistoryStore = defineStore('history', () => {
         if (!store) await initStore();
         fileHistory.value = fileHistory.value.filter(f => f.filePath !== filePath);
         await store?.set('fileHistory', fileHistory.value);
+        //这里要对应真正删除文件的操作
         await store?.save();
     }
 

@@ -23,9 +23,8 @@ import Slider from '../components/slider.vue';
 import Editor from '../components/editor.vue';
 import TopNav from '../components/TopNav.vue';
 import Resizer from '../components/Resizer.vue';
-import { loadFile } from '../composables/loadFile';
-import { createNewFile } from '../composables/newFile';
 import { useHistoryStore } from '../stores/history';
+import { createNewFile, loadFile } from '../utils/fileUtils';
 
 const historyStore = useHistoryStore();
 const sliderWidth = ref(256); // 初始宽度

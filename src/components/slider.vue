@@ -45,7 +45,8 @@
 <script setup lang="ts">
 import { useHistoryStore } from '../stores/history';
 import { useFileStore } from '../stores/file';
-import { loadFile } from '../composables/loadFile';
+import { loadFile } from '../utils/fileUtils';
+
 
 const props = defineProps<{
     width: number
