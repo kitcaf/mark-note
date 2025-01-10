@@ -37,3 +37,10 @@ input {
     color: inherit;
     background: transparent;
 }
+
+.filename-node:empty::before {
+    content: attr(data-placeholder);
+    color: #999;
+    font-style: italic;
+    pointer-events: none;
+}

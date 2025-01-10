@@ -1,16 +1,12 @@
 import { useEditorStore } from '../stores/editor';
 import { useFileStore } from '../stores/file';
-import { formatDate } from '../utils/time';
-
 
 export const createNewFile = async () => {
     const editorStore = useEditorStore();
     const fileStore = useFileStore();
 
     try {
-
-        const fileName = `${Date.now()}无标题的`;
-        console.log(fileName)
+        const fileName = `未命名文件`;
         await editorStore.initEditor(fileName);
 
         fileStore.setCurrentFile({

@@ -52,7 +52,10 @@ const initialConfig: CreateEditorArgs = {
     editorState: prepopulatedRichText as any,
     editable: true,
     nodes: [...playgroundNodes, FileNameNode],
-    theme: basicTheme
+    theme: basicTheme,
+    onError: (error: Error) => {
+        console.error(error);
+    }
 };
 
 

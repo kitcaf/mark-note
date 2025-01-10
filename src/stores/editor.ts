@@ -1,10 +1,10 @@
 import { HeadingNode } from '@lexical/rich-text';
 import { defineStore } from 'pinia';
-import { $getRoot, $createParagraphNode, type LexicalEditor, createEditor, $createTextNode, $getSelection } from 'lexical';
+import { $getRoot, $createParagraphNode, type LexicalEditor, createEditor, $createTextNode, $getSelection, LexicalNode, KEY_ENTER_COMMAND, $isRangeSelection } from 'lexical';
 import { useFileStore } from './file';
 import { ref } from 'vue';
 import { useMounted } from '../composables/useMounted';
-import { $createFileNameNode } from '../nodes/FileNameNode';
+import { $createFileNameNode, $isFileNameNode } from '../nodes/FileNameNode';
 
 export const useEditorStore = defineStore('editor', () => {
     const editor = ref<ReturnType<typeof createEditor> | null>(null);
@@ -14,15 +14,36 @@ export const useEditorStore = defineStore('editor', () => {
         const fileStore = useFileStore();
 
         useMounted(() => {
-            //监听编辑器变化
-            return editorInstance.registerUpdateListener(({ }) => {
+            // 原有的监听器
+            const updateListener = editorInstance.registerUpdateListener(() => {
                 console.log('编辑器状态改变中')
                 if (fileStore.currentFile.isSaved) {
                     fileStore.setCurrentFile({ isSaved: false });
                 }
-            })
-        })
+            });
 
+            // 注册键盘事件监听
+            const keyDownListener = editorInstance.registerCommand(
+                KEY_ENTER_COMMAND,
+                (event: KeyboardEvent) => {
+                    const selection = $getSelection();
+                    if ($isRangeSelection(selection)) {
+                        const node = selection.getNodes()[0];
+                        if ($isFileNameNode(node)) {
+                            return node.onKeyDown(event);
+                        }
+                    }
+                    return false;
+                },
+                1 // 优先级
+            );
+
+            // 返回清理函数
+            return () => {
+                updateListener();
+                keyDownListener();
+            };
+        });
     }
 
     async function initEditor(filename: string) {
@@ -31,9 +52,19 @@ export const useEditorStore = defineStore('editor', () => {
                 editor.value!.update(() => {
                     const root = $getRoot();
                     root.clear();
-                    const paragraph = $createParagraphNode();
 
+                    // 创建段落节点来包装文件名节点
+                    const paragraph = $createParagraphNode();
+                    const fileNameNode = $createFileNameNode(filename);
+                    paragraph.append(fileNameNode);
                     root.append(paragraph);
+
+                    // // 选中文件名
+                    // const selection = $getSelection();
+                    // if (selection) {
+                    //     fileNameNode.selectNext();
+                    // }
+
                     resolve();
                 });
             });
