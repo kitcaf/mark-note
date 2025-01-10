@@ -31,7 +31,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 
 import { useHistoryStore } from '../stores/history';
 import { useFileStore } from '../stores/file';
-import { ask } from '@tauri-apps/plugin-dialog';
+import { dialog } from '../services/dialog';
 import { createNewFile, saveFile } from '../utils/fileUtils';
 
 
@@ -55,9 +55,11 @@ async function saveCurrentState() {
         return true;
     } else {
         // 如果文件未保存，询问用户
-        const shouldSave = await ask('文件未保存，是否保存？', {
+        const shouldSave = await dialog.confirm({
             title: '关闭确认',
-            kind: 'warning'
+            content: '文件未保存，是否保存？',
+            position: 'center',
+            useOverlay: true
         });
 
         if (shouldSave) {
