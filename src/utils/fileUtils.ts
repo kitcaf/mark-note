@@ -3,6 +3,7 @@ import { useEditorStore } from "../stores/editor";
 import { useFileStore } from "../stores/file";
 import { save } from "@tauri-apps/plugin-dialog";
 import { useHistoryStore } from "../stores/history";
+import { dialog } from "../services/dialog";
 
 /**
  * 从文件路径中提取文件名（包含扩展名）
@@ -102,11 +103,27 @@ export async function loadFile(filePath: string, fileName: string) {
             isNew: false
         });
     } catch (error) {
+
+        //信息提示
+        const historyStore = useHistoryStore();
+        const result = await dialog.confirm({
+            title: '加载文件失败',
+            content: '文件加载失败（目前为系统新建文件）；是否删除文件索引',
+            position: 'bottom-right',
+            useOverlay: false,
+        })
+        if (result) {
+            //删除相关是索引
+            historyStore.removeHistory(filePath);
+            
+        }
+
         console.error('Failed to load file:', error);
         throw error;
     }
 }
 
+// 将文件创建在当前应用下，不保证保存
 export const createNewFile = async () => {
     const editorStore = useEditorStore();
     const fileStore = useFileStore();
@@ -164,6 +181,8 @@ export const saveFile = async () => {
 
             // 添加到历史记录
             await historyStore.addHistory(fileStore.currentFile.fileName, filePath);
+            // 保存当前文件是上一次打开文件
+            await historyStore.saveLastFile(fileName, filePath);
         } else {
             const editorState = JSON.stringify(
                 editor.getEditorState().toJSON()
@@ -171,9 +190,6 @@ export const saveFile = async () => {
             await writeTextFile(fileStore.currentFile.filePath, editorState);
             fileStore.setCurrentFile({ isSaved: true });
         }
-
-
-
     } catch (error) {
         console.error('保存文件失败:', error);
     }

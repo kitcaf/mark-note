@@ -64,6 +64,7 @@ async function saveCurrentState() {
 
         if (shouldSave) {
             await saveFile()
+            
             return true;
         }
         // 用户选择不保存

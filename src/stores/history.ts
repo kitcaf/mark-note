@@ -40,6 +40,7 @@ export const useHistoryStore = defineStore('history', () => {
     // 保存最后编辑的文件信息
     async function saveLastFile(fileName: string, filePath: string) {
         if (!store) await initStore();
+        addHistory(fileName, filePath);
         await store?.set('lastFile', { fileName, filePath });
         await store?.save();
     }
@@ -81,6 +82,7 @@ export const useHistoryStore = defineStore('history', () => {
     async function removeHistory(filePath: string) {
         if (!store) await initStore();
         fileHistory.value = fileHistory.value.filter(f => f.filePath !== filePath);
+        //如果
         await store?.set('fileHistory', fileHistory.value);
         //这里要对应真正删除文件的操作
         await store?.save();
@@ -94,6 +96,12 @@ export const useHistoryStore = defineStore('history', () => {
         await store?.save();
     }
 
+    async function commit(filePath: string, fileName: string) {
+        await store?.set('fileHistory', fileHistory.value);
+        await store?.set('lastFile', { filePath, fileName });
+        await store?.save();
+    }
+    
     return {
         fileHistory,
         addHistory,
