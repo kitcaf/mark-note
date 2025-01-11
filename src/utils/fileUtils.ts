@@ -103,7 +103,6 @@ export async function loadFile(filePath: string, fileName: string) {
             isNew: false
         });
     } catch (error) {
-
         //信息提示
         const historyStore = useHistoryStore();
         const result = await dialog.confirm({
@@ -115,9 +114,7 @@ export async function loadFile(filePath: string, fileName: string) {
         if (result) {
             //删除相关是索引
             historyStore.removeHistory(filePath);
-            
         }
-
         console.error('Failed to load file:', error);
         throw error;
     }

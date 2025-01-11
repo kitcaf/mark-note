@@ -23,8 +23,18 @@ export const useFileStore = defineStore('file', () => {
         };
     }
 
+    function deleteCurrentFile() {
+        currentFile.value = {
+            fileName: '',
+            filePath: null,
+            isSaved: true,
+            isNew: true
+        };
+    }
+
     return {
         currentFile,
-        setCurrentFile
+        setCurrentFile,
+        deleteCurrentFile
     };
 }); 

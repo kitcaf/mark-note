@@ -1,8 +1,9 @@
 import { Store } from '@tauri-apps/plugin-store';
 import { join } from '@tauri-apps/api/path';
 import { appDataDir } from '@tauri-apps/api/path';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
+import { useFileStore } from './file';
 
 interface FileHistory {
     fileName: string;
@@ -10,8 +11,10 @@ interface FileHistory {
     lastAccessed: number;
 }
 
+
 export const useHistoryStore = defineStore('history', () => {
     const fileHistory = ref<FileHistory[]>([]);
+    const fileStore = useFileStore()
     let store: Store | null = null;
 
     // 初始化 store
@@ -82,8 +85,13 @@ export const useHistoryStore = defineStore('history', () => {
     async function removeHistory(filePath: string) {
         if (!store) await initStore();
         fileHistory.value = fileHistory.value.filter(f => f.filePath !== filePath);
-        //如果
+        //同时删除记录的上一个文件
+        if (filePath == fileStore.currentFile.filePath)
+            fileStore.deleteCurrentFile()
+
+        await store?.set("lastFile", {})
         await store?.set('fileHistory', fileHistory.value);
+
         //这里要对应真正删除文件的操作
         await store?.save();
     }
@@ -101,7 +109,7 @@ export const useHistoryStore = defineStore('history', () => {
         await store?.set('lastFile', { filePath, fileName });
         await store?.save();
     }
-    
+
     return {
         fileHistory,
         addHistory,

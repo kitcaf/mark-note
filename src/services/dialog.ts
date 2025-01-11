@@ -31,12 +31,12 @@ function createDialog(options: DialogOptions): number {
                 'onUpdate:modelValue': (value: boolean) => {
                     dialogVisible.value = value;
                     if (!value) {
-                        // 当 dialog 关闭时，移除组件
+                        // 增加动画结束的延迟时间
                         setTimeout(() => {
                             app.unmount();
                             const container = document.getElementById(`dialog-${id}`);
                             container?.remove();
-                        }, 300); // 等待动画结束
+                        }, 300); // 与动画持续时间匹配
                     }
                 },
                 onClose: () => {
@@ -105,8 +105,9 @@ export const dialog = {
     },
 
     // 显示消息提示
-    message(content: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') {
+    message(title: string, content: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') {
         return createDialog({
+            title,
             content,
             position: 'bottom-right',
             useOverlay: false,

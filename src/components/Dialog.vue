@@ -1,12 +1,14 @@
 <template>
     <Teleport to="body">
         <!-- 蒙版 -->
-        <div v-if="modelValue && useOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40"
-            @click="handleOverlayClick">
-        </div>
+        <Transition name="fade">
+            <div v-if="modelValue && useOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40"
+                @click="handleOverlayClick">
+            </div>
+        </Transition>
 
         <!-- 对话框 -->
-        <Transition name="dialog">
+        <Transition :name="position === 'center' ? 'zoom-fade' : 'slide-fade'">
             <div v-if="modelValue" :class="[
                 'fixed z-50 bg-white rounded-lg shadow-lg overflow-hidden bg-gray-50',
                 position === 'center'
@@ -94,20 +96,38 @@ const handleButtonClick = async (button: DialogButton) => {
 </script>
 
 <style scoped>
-.dialog-enter-active,
-.dialog-leave-active {
-    transition: all 0.3s ease;
+/* 淡入淡出动画 - 用于遮罩层 */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
 }
 
-.dialog-enter-from,
-.dialog-leave-to {
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+/* 缩放淡入动画 - 用于居中对话框 */
+.zoom-fade-enter-active,
+.zoom-fade-leave-active {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zoom-fade-enter-from,
+.zoom-fade-leave-to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+}
+
+/* 滑动淡入动画 - 用于右下角对话框 */
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
     opacity: 0;
     transform: translateY(20px);
-}
-
-.dialog-enter-to,
-.dialog-leave-from {
-    opacity: 1;
-    transform: translateY(0);
 }
 </style>
