@@ -15,6 +15,15 @@ interface DialogOptions {
     closeOnOverlay?: boolean;
 }
 
+interface MessageOptions {
+    title?: string;
+    content: string;
+    position?: 'center' | 'bottom-right';
+    useOverlay?: boolean;
+    onConfirm?: () => void;
+    type?: 'info' | 'success' | 'warning' | 'error';
+}
+
 // 创建一个容器来存放所有的 dialog 实例
 const dialogStack = ref<Array<{ id: number; visible: boolean }>>([]);
 let currentId = 0;
@@ -105,15 +114,26 @@ export const dialog = {
     },
 
     // 显示消息提示
-    message(title: string, content: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') {
+    message(options: MessageOptions | string) {
+        // 处理简单字符串参数的情况
+        const normalizedOptions: MessageOptions = typeof options === 'string' 
+            ? { content: options }
+            : options;
+
         return createDialog({
-            title,
-            content,
-            position: 'bottom-right',
-            useOverlay: false,
+            title: normalizedOptions.title,
+            content: normalizedOptions.content,
+            position: normalizedOptions.position || 'bottom-right',
+            useOverlay: normalizedOptions.useOverlay || false,
             showClose: true,
             closeOnOverlay: true,
-            buttons: [],
+            buttons: normalizedOptions.onConfirm ? [
+                {
+                    text: '确定',
+                    type: 'primary',
+                    action: normalizedOptions.onConfirm
+                }
+            ] : [],
         });
     },
 

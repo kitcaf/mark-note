@@ -4,6 +4,7 @@ import { useFileStore } from "../stores/file";
 import { save } from "@tauri-apps/plugin-dialog";
 import { useHistoryStore } from "../stores/history";
 import { dialog } from "../services/dialog";
+import router from "../router";
 
 /**
  * 从文件路径中提取文件名（包含扩展名）
@@ -105,16 +106,17 @@ export async function loadFile(filePath: string, fileName: string) {
     } catch (error) {
         //信息提示
         const historyStore = useHistoryStore();
-        const result = await dialog.confirm({
-            title: '加载文件失败',
-            content: '文件加载失败（目前为系统新建文件）；是否删除文件索引',
+        console.log("加载文件失败")
+        dialog.message({
+            title: '文件加载失败',
+            content: '文件加载失败；是否删除文件索引',
             position: 'bottom-right',
             useOverlay: false,
-        })
-        if (result) {
-            //删除相关是索引
-            historyStore.removeHistory(filePath);
-        }
+            onConfirm: () => historyStore.removeHistory(filePath)
+        });
+
+        //跳转页面
+        router.push({ name: 'NoFile' });
         console.error('Failed to load file:', error);
         throw error;
     }
@@ -135,7 +137,7 @@ export const createNewFile = async () => {
             isSaved: false,
             isNew: true
         });
-
+        router.push({ name: 'editorIndex' });
         return fileName;
     } catch (error) {
         console.error('创建新文件失败:', error);
