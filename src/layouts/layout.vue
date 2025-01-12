@@ -9,8 +9,12 @@
                 <Resizer @resize="handleResize" />
                 <!-- 右侧内容区 -->
                 <div class="flex-1 overflow-auto bg-white relative">
-                    <!-- 内容区域 -->
-                    <router-view></router-view>
+                    <!-- 使用 KeepAlive 包裹 router-view -->
+                    <router-view v-slot="{ Component }">
+                        <keep-alive :include="['EditorIndex']">
+                            <component :is="Component" />
+                        </keep-alive>
+                    </router-view>
                 </div>
             </div>
 

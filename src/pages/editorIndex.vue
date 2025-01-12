@@ -12,6 +12,11 @@ import { useHistoryStore } from '../stores/history';
 import { loadFile } from '../utils/fileUtils';
 const historyStore = useHistoryStore();
 
+//和keep-alive配合使用的include匹配，保证不被销毁
+defineOptions({
+    name: 'EditorIndex'
+});
+
 // 处理编辑器就绪
 async function handleEditorReady() {
     try {

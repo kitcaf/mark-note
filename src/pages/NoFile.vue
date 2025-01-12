@@ -27,6 +27,9 @@
 import { useRouter } from 'vue-router';
 import { createNewFile } from '../utils/fileUtils';
 
+defineOptions({
+    name: 'NoFile'
+});
 
 // 处理导入文件
 const handleImport = () => {
