@@ -14,7 +14,7 @@
                 position === 'center'
                     ? 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
                     : 'bottom-4 right-4'
-            ]" :style="{ minWidth: '320px', maxWidth: '90vw' }">
+            ]" :style="{ minWidth: '320px', maxWidth: '460px' }">
                 <!-- 标题栏 -->
                 <div v-if="title" class="px-4 py-2  border-b flex justify-between items-center bg-gray-50">
                     <h3 class="text-lg font-bold text-gray-900">{{ title }}</h3>

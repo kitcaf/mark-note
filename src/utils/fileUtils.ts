@@ -103,13 +103,12 @@ export async function loadFile(filePath: string, fileName: string) {
             isSaved: true,
             isNew: false
         });
-    } catch (error) {
+    } catch (error: any) {
         //信息提示
         const historyStore = useHistoryStore();
-        console.log("加载文件失败")
         dialog.message({
             title: '文件加载失败',
-            content: '文件加载失败；是否删除文件索引',
+            content: error.toString(),
             position: 'bottom-right',
             useOverlay: false,
             onConfirm: () => historyStore.removeHistory(filePath)
@@ -117,7 +116,6 @@ export async function loadFile(filePath: string, fileName: string) {
 
         //跳转页面
         router.push({ name: 'NoFile' });
-        console.error('Failed to load file:', error);
         throw error;
     }
 }

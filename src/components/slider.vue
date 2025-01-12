@@ -1,7 +1,6 @@
 <template>
     <div class="bg-gray-50 h-full border-r" :style="{ width: width + 'px' }">
         <div class="px-4">
-
             <div class="mt-2">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
