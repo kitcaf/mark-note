@@ -8,6 +8,12 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -23,8 +29,9 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
     "types": [
-      "@tauri-apps/api"
-    ]
+      "@tauri-apps/api",
+      "node"
+    ],
   },
   "include": [
     "src/**/*.ts",

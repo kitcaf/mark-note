@@ -8,6 +8,9 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
+import presetAnimations from 'unocss-preset-animations'
+import { presetShadcn } from 'unocss-preset-shadcn'
+
 export default defineConfig({
   presets: [
     presetUno({
@@ -18,6 +21,13 @@ export default defineConfig({
         md: '2px',
         lg: '3px',
       },
+    }),
+    //@ts-ignore
+    presetAnimations(),
+    presetShadcn({
+      color: 'red',
+      // With default setting for SolidUI, you need to set the darkSelector option.
+      darkSelector: '[data-kb-theme="dark"]',
     }),
     presetAttributify(),
     presetIcons({
