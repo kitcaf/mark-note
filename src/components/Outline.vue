@@ -28,8 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { $getRoot } from 'lexical';
+import { ref, computed, onMounted } from 'vue';
+import { $getRoot, LexicalNode } from 'lexical';
+import { HeadingNode } from '@lexical/rich-text';
 import { useEditorStore } from '../stores/editor';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -44,6 +45,23 @@ interface OutlineItem {
 const editorStore = useEditorStore();
 const outlineItems = ref<OutlineItem[]>([]);
 
+// 按标题级别分组
+const groupedOutlineItems = computed(() => {
+    const groups: { [key: string]: OutlineItem[] } = {};
+    outlineItems.value.forEach(item => {
+        if (!groups[item.level]) {
+            groups[item.level] = [];
+        }
+        groups[item.level].push(item);
+    });
+    return groups;
+});
+
+// 检查节点是否是标题节点
+function isHeadingNode(node: LexicalNode): node is HeadingNode {
+    return node instanceof HeadingNode;
+}
+
 // 监听编辑器变化，更新大纲
 function updateOutline() {
     const editor = editorStore.editor;
@@ -54,10 +72,10 @@ function updateOutline() {
         const root = $getRoot();
 
         root.getChildren().forEach((node, index) => {
-            if (node.getType() === 'heading') {
+            if (isHeadingNode(node)) {
                 items.push({
                     id: node.getKey(),
-                    level: node.getTag().slice(1), // h1 -> 1
+                    level: parseInt(node.getTag().slice(1)), // h1 -> 1
                     text: node.getTextContent(),
                     position: index
                 });
@@ -77,7 +95,7 @@ function handleHeadingClick(item: OutlineItem) {
         const root = $getRoot();
         const nodes = root.getChildren();
         const node = nodes[item.position];
-        if (node) {
+        if (node && isHeadingNode(node)) {
             node.selectStart();
         }
     });
