@@ -61,8 +61,11 @@ function updateOutline() {
         const items: OutlineItem[] = [];
         const root = $getRoot();
 
+        console.log("root.children", root.getChildren())
         root.getChildren().forEach((node, index) => {
             if (isHeadingNode(node)) {
+                // 这里的遍历顺序，就是编辑器从上到下的出现节点的顺序
+                console.log(node, index)
                 items.push({
                     id: node.getKey(),
                     level: parseInt(node.getTag().slice(1)), // h1 -> 1
