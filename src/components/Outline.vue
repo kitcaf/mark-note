@@ -1,27 +1,22 @@
 <template>
     <ScrollArea class="h-[calc(100vh-120px)]">
         <div class="space-y-2 px-4">
-            <div v-for="(group, level) in groupedOutlineItems" :key="level" class="mb-2">
-                <Collapsible>
-                    <CollapsibleTrigger
-                        class="flex items-center w-full p-2 text-sm text-gray-600 hover:bg-gray-100 rounded">
-                        <div class="i-carbon:caret-right mr-1 transform transition-transform"
-                            :class="{ 'rotate-90': true }">
-                        </div>
-                        <span>H{{ level }} 标题</span>
-                        <span class="ml-2 text-gray-400">({{ group.length }})</span>
-                    </CollapsibleTrigger>
+            <!-- 标题级别选择器 -->
+            <!-- <div class="flex items-center space-x-2 mb-4">
+                    <span class="text-sm text-gray-500">显示级别：</span>
+                <select v-model="maxLevel" class="text-sm border rounded p-1">
+                    <option v-for="n in 6" :key="n" :value="n">H{{ n }}</option>
+                </select>
+            </div> -->
 
-                    <CollapsibleContent>
-                        <div v-for="item in group" :key="item.id" class="outline-item pl-6">
-                            <div class="flex items-center p-2 rounded cursor-pointer hover:bg-gray-100"
-                                @click="handleHeadingClick(item)">
-                                <div class="i-carbon:dot-mark text-gray-400 mr-2"></div>
-                                <span class="text-sm text-gray-600 truncate">{{ item.text }}</span>
-                            </div>
-                        </div>
-                    </CollapsibleContent>
-                </Collapsible>
+            <!-- 大纲树形结构 -->
+            <div class="space-y-1">
+                <template v-for="item in filteredOutlineItems" :key="item.id">
+                    <!-- 只渲染顶层节点 -->
+                    <div v-if="item.level === 1" class="outline-item">
+                        <OutlineNode :item="item" :items="filteredOutlineItems" @click="handleHeadingClick" />
+                    </div>
+                </template>
             </div>
         </div>
     </ScrollArea>
@@ -33,34 +28,29 @@ import { $getRoot, LexicalNode } from 'lexical';
 import { HeadingNode } from '@lexical/rich-text';
 import { useEditorStore } from '../stores/editor';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import OutlineNode from './OutlineNode.vue';
 
 interface OutlineItem {
     id: string;
     level: number;
     text: string;
     position: number;
+    children?: OutlineItem[];
 }
 
 const editorStore = useEditorStore();
 const outlineItems = ref<OutlineItem[]>([]);
-
-// 按标题级别分组
-const groupedOutlineItems = computed(() => {
-    const groups: { [key: string]: OutlineItem[] } = {};
-    outlineItems.value.forEach(item => {
-        if (!groups[item.level]) {
-            groups[item.level] = [];
-        }
-        groups[item.level].push(item);
-    });
-    return groups;
-});
+const maxLevel = ref(3); // 默认显示所有级别
 
 // 检查节点是否是标题节点
 function isHeadingNode(node: LexicalNode): node is HeadingNode {
     return node instanceof HeadingNode;
 }
+
+// 过滤大纲项目，只显示到指定级别
+const filteredOutlineItems = computed(() => {
+    return outlineItems.value.filter(item => item.level <= maxLevel.value);
+});
 
 // 监听编辑器变化，更新大纲
 function updateOutline() {
