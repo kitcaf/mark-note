@@ -3,7 +3,7 @@ import { useEditorStore } from "../stores/editor";
 import { useFileStore } from "../stores/file";
 import { save } from "@tauri-apps/plugin-dialog";
 import { useHistoryStore } from "../stores/history";
-import { dialog } from "../services/dialog";
+import { dialog } from "./dialog";
 import router from "../router";
 
 /**

@@ -1,38 +1,58 @@
 <template>
     <div class="h-screen flex flex-col">
-        <Top :topHeight="32" />
-        <div class="flex-1">
-            <div class="flex h-screen bg-gray-100">
-                <!-- 左侧导航栏 -->
-                <Slider :width="sliderWidth" />
-                <!-- 拖动条 -->
-                <Resizer @resize="handleResize" />
-                <!-- 右侧内容区 -->
-                <div class="flex-1 overflow-auto bg-white relative">
-                    <!-- 使用 KeepAlive 包裹 router-view -->
-                    <router-view v-slot="{ Component }">
-                        <keep-alive :include="['EditorIndex']">
-                            <component :is="Component" />
-                        </keep-alive>
-                    </router-view>
-                </div>
-            </div>
+        <!-- 固定顶部栏 -->
+        <div class="fixed top-0 left-0 right-0 z-50 bg-white">
+            <Top :topHeight="topHeight" />
+        </div>
 
+        <!-- 左侧固定区域 -->
+        <div class="fixed left-0 bg-gray-100 border-r" :style="sliderStyle">
+            <Slider :width="sliderWidth" />
+        </div>
+
+        <!-- 调整区域 -->
+        <div class="fixed z-10" :style="resizerStyle">
+            <Resizer @resize="handleResize" class="h-full" />
+        </div>
+
+        <!-- 编辑区域 -->
+        <div class="flex-1" :style="editorStyle">
+            <div class="overflow-auto bg-white relative" :style="{ height: contentHeight }">
+                <router-view v-slot="{ Component }">
+                    <keep-alive :include="['EditorIndex']">
+                        <component :is="Component" />
+                    </keep-alive>
+                </router-view>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useLayout } from '../composables/useLayout';
 import Top from '../components/top.vue';
 import Slider from '../components/slider.vue';
 import Resizer from "../components/Resizer.vue"
 
-
-const sliderWidth = ref(256); // 初始宽度
-const handleResize = (width: number) => {
-    sliderWidth.value = width;
-};
+const {
+    topHeight,
+    sliderWidth,
+    contentHeight,
+    sliderStyle,
+    resizerStyle,
+    editorStyle,
+    handleResize
+} = useLayout({
+    initialTopHeight: 32,
+    initialSliderWidth: 256,
+    minSliderWidth: 200,
+    maxSliderWidth: 400
+});
 </script>
 
-<style scoped></style>
+<style scoped>
+.h-screen {
+    height: 100vh;
+    overflow: hidden;
+}
+</style>

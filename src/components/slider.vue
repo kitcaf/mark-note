@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-gray-50 h-full border-r" :style="{ width: width + 'px' }">
+    <div class="h-full overflow-hidden flex flex-col bg-gray-50">
         <!-- 选项栏 -->
-        <div class="border-b">
+        <div class="border-b flex-shrink-0">
             <div class="flex">
                 <button 
                     v-for="tab in tabs" 
@@ -22,12 +22,15 @@
             </div>
         </div>
 
-        <div class="px-4">
-            <!-- 历史文件列表 -->
-            <FileHistory v-show="currentTab === 'history'" />
+        <!-- 内容区域 - 添加滚动 -->
+        <div class="flex-1 overflow-auto">
+            <div class="px-4">
+                <!-- 历史文件列表 -->
+                <FileHistory v-show="currentTab === 'history'" />
 
-            <!-- 大纲 -->
-            <Outline v-show="currentTab === 'outline'" />
+                <!-- 大纲 -->
+                <Outline v-show="currentTab === 'outline'" />
+            </div>
         </div>
     </div>
 </template>

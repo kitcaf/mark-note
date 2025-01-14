@@ -22,7 +22,6 @@ async function handleEditorReady() {
     try {
         // 加载应用数据
         await historyStore.initStore();
-
         // 尝试加载上次编辑的文件
         const lastFile = await historyStore.getLastFile();
         if (lastFile) {

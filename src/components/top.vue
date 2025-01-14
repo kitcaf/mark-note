@@ -31,7 +31,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 
 import { useHistoryStore } from '../stores/history';
 import { useFileStore } from '../stores/file';
-import { dialog } from '../services/dialog';
+import { dialog } from '../utils/dialog';
 import { createNewFile, saveFile } from '../utils/fileUtils';
 
 

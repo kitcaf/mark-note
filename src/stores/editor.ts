@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { $getRoot, $createParagraphNode, type LexicalEditor, createEditor, $getSelection, LexicalNode, KEY_ENTER_COMMAND, $isRangeSelection } from 'lexical';
+import { $getRoot, $createParagraphNode, type LexicalEditor, createEditor, $getSelection, KEY_ENTER_COMMAND, $isRangeSelection } from 'lexical';
 import { useFileStore } from './file';
 import { ref } from 'vue';
 import { useMounted } from '../composables/useMounted';

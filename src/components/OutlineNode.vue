@@ -25,14 +25,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-
-interface OutlineItem {
-    id: string;
-    level: number;
-    text: string;
-    position: number;
-    children?: OutlineItem[];
-}
+import type { OutlineItem } from "../composables/useOutline"
 
 const props = defineProps<{
     item: OutlineItem;
@@ -46,8 +39,10 @@ const emit = defineEmits<{
 const collapsed = ref(false);
 const hasChildren = computed(() => children.value.length > 0);
 
+/**
+ * 返回当前节点的下一层children节点
+ */
 const children = computed(() => {
-    // 寻找本节点的下一层的children节点; 本节点的children一定出现在本节点的后面, 当然不是所有后面的节点都是children
     const currentLevel = props.item.level;
     const startIndex = props.items.findIndex(i => i.id === props.item.id) + 1;
     const result: OutlineItem[] = [];
@@ -55,7 +50,6 @@ const children = computed(() => {
     for (let i = startIndex; i < props.items.length; i++) {
         const item = props.items[i];
         if (item.level <= currentLevel) break;
-        //恰好是下一级children
         if (item.level === currentLevel + 1) {
             result.push(item);
         }
