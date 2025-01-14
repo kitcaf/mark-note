@@ -27,7 +27,7 @@ import {
     TEXT_FORMAT_TRANSFORMERS,
     TEXT_MATCH_TRANSFORMERS,
 } from '@lexical/markdown'
-import basicTheme from "../theme/playgroundtheme";
+// import basicTheme from "../theme/playgroundtheme";
 import { useKeyboardShortcuts } from '../composables/useKeyboardShortcuts';
 import { FileNameNode } from '../nodes/FileNameNode';
 
@@ -54,7 +54,7 @@ const initialConfig: CreateEditorArgs = {
     editorState: prepopulatedRichText as any,
     editable: true,
     nodes: [...playgroundNodes, FileNameNode],
-    theme: basicTheme,
+    // theme: basicTheme,
     onError: (error: Error) => {
         console.error(error);
     }

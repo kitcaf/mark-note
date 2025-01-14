@@ -12,8 +12,6 @@ import './basic.css'
 
 // 切换主题
 
-
-
 const theme: EditorThemeClasses = {
     blockCursor: 'PlaygroundEditorTheme__blockCursor',
     characterLimit: 'PlaygroundEditorTheme__characterLimit',

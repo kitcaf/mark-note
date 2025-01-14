@@ -6,6 +6,7 @@ import {
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
+  presetTypography
 } from 'unocss'
 
 import presetAnimations from 'unocss-preset-animations'
@@ -30,6 +31,13 @@ export default defineConfig({
       darkSelector: '[data-kb-theme="dark"]',
     }),
     presetAttributify(),
+    presetTypography({
+      cssExtend: {
+        // 'prose': {
+        //   'max-width': 'none'
+        // }
+      }
+    }),
     presetIcons({
       scale: 1.2,
       collections: {

@@ -17,13 +17,14 @@
 
         <!-- 编辑区域 -->
         <div class="flex-1" :style="editorStyle">
-            <div class="overflow-auto bg-white relative" :style="{ height: contentHeight }">
+            <article class="overflow-auto bg-white relative text-base prose prose-truegray xl:text-xl !max-w-none"
+                :style="{ height: contentHeight }">
                 <router-view v-slot="{ Component }">
                     <keep-alive :include="['EditorIndex']">
                         <component :is="Component" />
                     </keep-alive>
                 </router-view>
-            </div>
+            </article>
         </div>
     </div>
 </template>
