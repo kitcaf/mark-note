@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia';
-import { $getRoot, $createParagraphNode, createEditor, $getSelection, KEY_ENTER_COMMAND, $isRangeSelection, $createTextNode, LexicalEditor } from 'lexical';
+import { $createParagraphNode, $createTextNode, $getRoot, createEditor, LexicalEditor } from 'lexical';
 import { useFileStore } from './file';
 import { ref } from 'vue';
 import { useMounted } from '../composables/useMounted';
-import { $isFileNameNode } from '../nodes/FileNameNode';
 
 export const useEditorStore = defineStore('editor', () => {
     const editor = ref<ReturnType<typeof createEditor> | null>(null);

@@ -19,6 +19,7 @@ defineOptions({
 
 // 处理编辑器就绪
 async function handleEditorReady() {
+    console.log("加载上一次的文件handleEditorReady")
     try {
         // 加载应用数据
         await historyStore.initStore();

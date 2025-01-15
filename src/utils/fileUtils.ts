@@ -6,6 +6,7 @@ import { useHistoryStore } from "../stores/history";
 import { dialog } from "./dialog";
 import router from "../router";
 import { open } from '@tauri-apps/plugin-dialog';
+import { $getRoot } from "lexical";
 
 /**
  * 从文件路径中提取文件名（包含扩展名）
@@ -81,9 +82,7 @@ export function getExtension(fileName: string): string {
 }
 
 /**
- * 加载文件到编辑器中（编辑器只是存放文件路径引用）
- * @param filePath 文件路径
- * @param fileName 文件名
+ * 加载文件：将文件内容加载到编辑器中
  */
 export async function loadFile(filePath: string, fileName: string) {
     const editorStore = useEditorStore();
@@ -93,29 +92,54 @@ export async function loadFile(filePath: string, fileName: string) {
         // 读取文件内容
         const content = await readTextFile(filePath);
 
-        // 设置编辑器状态
+        // 获取编辑器实例
         const editor = editorStore.getEditorInstance();
-        editor.setEditorState(editor.parseEditorState(content));
 
-        // 更新文件状态
-        fileStore.setCurrentFile({
-            fileName,
-            filePath,
-            isSaved: true,
-            isNew: false
+        // 先创建一个新的 EditorState
+        const parsedState = editor.parseEditorState(content);
+        console.log("加载文件成功", parsedState)
+        // 使用 Promise 包装状态更新过程
+        await new Promise<void>((resolve, reject) => {
+            try {
+                editor.update(() => {
+                    // 清空当前内容
+                    const root = $getRoot();
+                    root.clear();
+
+                    // 设置新状态
+                    editor.setEditorState(parsedState);
+
+                    // 更新文件状态
+                    fileStore.setCurrentFile({
+                        fileName,
+                        filePath,
+                        isSaved: true,
+                        isNew: false
+                    });
+
+                    resolve();
+                }, {
+                    discrete: true,  // 使用离散更新
+                    tag: 'history-load' // 添加标记
+                });
+            } catch (error) {
+                reject(error);
+            }
         });
-    } catch (error: any) {
-        //信息提示
+
+    } catch (error) {
+        console.error('加载文件失败:', error);
+        // 错误处理
         const historyStore = useHistoryStore();
         dialog.message({
             title: '文件加载失败',
-            content: error.toString(),
+            content: (error as Error).toString(),
             position: 'bottom-right',
             useOverlay: false,
             onConfirm: () => historyStore.removeHistory(filePath)
         });
 
-        //跳转页面
+        // 跳转到错误页面
         router.push({ name: 'NoFile' });
         throw error;
     }

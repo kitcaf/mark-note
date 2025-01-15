@@ -41,13 +41,13 @@ import { h } from 'vue'
 <template>
     <div>
         <h3 class="text-lg font-medium">
-            Appearance
+            外观
         </h3>
         <p class="text-sm text-muted-foreground">
             Customize the appearance of the app. Automatically switch between day and night themes.
         </p>
     </div>
-    <Separator />
+    <Separator class="my-3" />
     <!-- <form class="space-y-8" @submit="onSubmit"> -->
     <form class="space-y-8">
         <FormField v-slot="{ field }" name="font">

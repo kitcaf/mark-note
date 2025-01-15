@@ -59,10 +59,15 @@ const initialConfig: CreateEditorArgs = {
     editorState: prepopulatedRichText as any,
     editable: true,
     nodes: [...playgroundNodes, ListNode, ListItemNode, FileNameNode],
-    // theme: basicTheme,
     onError: (error: Error) => {
         console.error(error);
-    }
+    },
+    disableEvents: false,
+    // updateFlags: {
+    //     updateCursor: true,
+    //     updateLayout: true,
+    //     updateNestedLayout: true,
+    // },
 };
 
 
