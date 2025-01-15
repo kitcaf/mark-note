@@ -2,7 +2,7 @@
     <div class="h-screen flex flex-col">
         <!-- 固定顶部栏 -->
         <div class="fixed top-0 left-0 right-0 z-50 bg-white">
-            <Top :topHeight="topHeight" />
+            <Top :topHeight="topHeight" @show-settings="showSettings = true" />
         </div>
 
         <!-- 左侧固定区域 -->
@@ -26,6 +26,10 @@
                 </router-view>
             </article>
         </div>
+
+        <!-- 设置弹窗 -->
+        <SettingsDialog v-model="showSettings" />
+
     </div>
 </template>
 
@@ -34,6 +38,8 @@ import { useLayout } from '../composables/useLayout';
 import Top from '../components/top.vue';
 import Slider from '../components/slider.vue';
 import Resizer from "../components/Resizer.vue"
+import SettingsDialog from '@/pages/setting/index.vue';
+import { ref } from 'vue';
 
 const {
     topHeight,
@@ -49,6 +55,8 @@ const {
     minSliderWidth: 200,
     maxSliderWidth: 400
 });
+
+const showSettings = ref(false);
 </script>
 
 <style scoped>

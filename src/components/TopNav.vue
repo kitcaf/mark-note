@@ -13,16 +13,14 @@
                 *
             </span>
         </div>
-        <!-- 右侧按钮 -->
-        <div class="flex items-center space-x-2">
-            <!-- 添加你的按钮 -->
-        </div>
+
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useFileStore } from '../stores/file';
+import { Button } from '@/components/ui/button';
 
 const fileStore = useFileStore();
 
@@ -31,4 +29,8 @@ const fileName = computed(() => {
     const name = fileStore.currentFile?.fileName || '1_未命名.kc';
     return name
 });
+
+defineEmits<{
+    (e: 'show-settings'): void;
+}>();
 </script>

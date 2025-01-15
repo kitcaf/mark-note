@@ -4,12 +4,18 @@
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+    /* 去除默认的下划线 */
+    color: inherit;
+    /* 继承父元素的文本颜色 */
+}
+
+
 [contenteditable="true"] {
     outline: none;
 
 }
-
-
 
 /* 重置按钮样式 */
 button {

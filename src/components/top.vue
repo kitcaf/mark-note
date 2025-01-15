@@ -13,6 +13,12 @@
 
         <!-- 右侧 -->
         <div class="flex items-center h-full relative">
+            <!-- 右侧按钮 -->
+            <div class="flex items-center space-x-2">
+                <Button variant="ghost" size="icon" @click="$emit('show-settings')">
+                    <div class="i-carbon:settings" />
+                </Button>
+            </div>
             <MenuDropdown :menuItems="menuItems">
                 <WindowControl icon-class="i-carbon:overflow-menu-horizontal" :height="props.topHeight" />
             </MenuDropdown>
@@ -20,6 +26,7 @@
             <WindowControl @click="handleClose" icon-class="i-carbon:close" :height="props.topHeight"
                 :is-close="true" />
         </div>
+
     </div>
 </template>
 
