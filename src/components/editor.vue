@@ -6,6 +6,8 @@
                     <LexicalContentEditable />
                 </div>
             </LexicalRichTextPlugin>
+            <LexicalHistoryPlugin />
+            <LexicalListPlugin />
             <LexicalMarkdownPlugin :transformers="PLAYGROUND_TRANSFORMERS" />
         </LexicalComposer>
     </div>
@@ -27,9 +29,12 @@ import {
     TEXT_FORMAT_TRANSFORMERS,
     TEXT_MATCH_TRANSFORMERS,
 } from '@lexical/markdown'
+import { ListItemNode, ListNode } from '@lexical/list';
 // import basicTheme from "../theme/playgroundtheme";
 import { useKeyboardShortcuts } from '../composables/useKeyboardShortcuts';
 import { FileNameNode } from '../nodes/FileNameNode';
+import LexicalHistoryPlugin from './LexicalHistoryPlugin.vue';
+import LexicalListPlugin from "./LexicalListPlugin.vue"
 
 
 
@@ -53,7 +58,7 @@ const initialConfig: CreateEditorArgs = {
     namespace: 'note-editor',
     editorState: prepopulatedRichText as any,
     editable: true,
-    nodes: [...playgroundNodes, FileNameNode],
+    nodes: [...playgroundNodes, ListNode, ListItemNode, FileNameNode],
     // theme: basicTheme,
     onError: (error: Error) => {
         console.error(error);

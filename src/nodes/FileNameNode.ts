@@ -23,7 +23,6 @@ export class FileNameNode extends TextNode implements LexicalNode {
         dom.style.fontSize = '2em';
         dom.style.fontWeight = 'bold';
         dom.style.margin = '0';
-        dom.style.padding = '8px 0';
         dom.style.display = 'block';
 
         // 添加 placeholder 属性和类

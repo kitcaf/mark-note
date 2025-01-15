@@ -9,7 +9,7 @@ import router from "../router";
 /**
  * 从文件路径中提取文件名（包含扩展名）
  * @param filePath 文件路径
- * @returns 文件名
+ * @returns 文件名 
  */
 export function extractFileName(filePath: string): string {
     try {
@@ -80,7 +80,7 @@ export function getExtension(fileName: string): string {
 }
 
 /**
- * 加载文件到编辑器中
+ * 加载文件到编辑器中（编辑器只是存放文件路径引用）
  * @param filePath 文件路径
  * @param fileName 文件名
  */
@@ -120,7 +120,10 @@ export async function loadFile(filePath: string, fileName: string) {
     }
 }
 
-// 将文件创建在当前应用下，不保证保存
+/**
+ * 创建新文件，文件名只能在保存时指定（文件名是文件路径的一部分）
+ * @returns 
+ */
 export const createNewFile = async () => {
     const editorStore = useEditorStore();
     const fileStore = useFileStore();
@@ -142,6 +145,10 @@ export const createNewFile = async () => {
     }
 };
 
+/**
+ * 保存文件，将文件保存到文件系统中
+ * @returns 
+ */
 export const saveFile = async () => {
     const editorStore = useEditorStore();
     const fileStore = useFileStore();
