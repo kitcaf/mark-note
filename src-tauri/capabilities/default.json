@@ -13,18 +13,16 @@
     "core:window:allow-close",
     "core:window:allow-minimize",
     "core:window:allow-toggle-maximize",
+    "dialog:default",
     "dialog:allow-save",
     "dialog:allow-ask",
+    "dialog:allow-open",
     "store:allow-get",
     "store:allow-load",
     "store:allow-set",
     "store:default",
     "store:allow-save",
     "fs:default",
-
-
-
-    
     "fs:allow-write-file",
     "fs:allow-read-file",
     "fs:read-all",

@@ -32,7 +32,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useHistoryStore } from '../stores/history';
 import { useFileStore } from '../stores/file';
 import { dialog } from '../utils/dialog';
-import { createNewFile, saveFile } from '../utils/fileUtils';
+import { createNewFile, openFile, saveFile } from '../utils/fileUtils';
 
 
 const props = defineProps<{
@@ -41,7 +41,7 @@ const props = defineProps<{
 
 const menuItems = ref([
     { id: 1, label: '新建文件', action: createNewFile },
-    { id: 2, label: '打开文件', action: createNewFile },
+    { id: 2, label: '打开文件', action: openFile },
 ]);
 
 const historyStore = useHistoryStore();
@@ -64,7 +64,7 @@ async function saveCurrentState() {
 
         if (shouldSave) {
             await saveFile()
-            
+
             return true;
         }
         // 用户选择不保存

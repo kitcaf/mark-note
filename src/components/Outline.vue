@@ -26,8 +26,4 @@ const {
 
 </script>
 
-<style scoped>
-.outline-item:hover {
-    background-color: rgba(0, 0, 0, 0.04);
-}
-</style>
+<style scoped></style>

@@ -5,6 +5,7 @@ import { save } from "@tauri-apps/plugin-dialog";
 import { useHistoryStore } from "../stores/history";
 import { dialog } from "./dialog";
 import router from "../router";
+import { open } from '@tauri-apps/plugin-dialog';
 
 /**
  * 从文件路径中提取文件名（包含扩展名）
@@ -117,6 +118,102 @@ export async function loadFile(filePath: string, fileName: string) {
         //跳转页面
         router.push({ name: 'NoFile' });
         throw error;
+    }
+}
+
+/**
+ * 检查文件是否保存，如果未保存则提示用户
+ * @returns true 如果文件已保存或用户选择不保存，false 如果用户取消操作
+ */
+export async function checkFileSave(): Promise<boolean> {
+    const fileStore = useFileStore();
+
+    // 如果文件已保存，直接返回 true
+    if (fileStore.currentFile.isSaved) {
+        return true;
+    }
+
+    // 如果文件未保存，弹出确认对话框
+    try {
+        const result = await dialog.confirm({
+            title: '保存确认',
+            content: '当前文件未保存，是否保存？',
+            position: 'center',
+            useOverlay: true,
+            // buttons: [
+            //     {
+            //         text: '取消',
+            //         type: 'default',
+            //     },
+            //     {
+            //         text: '不保存',
+            //         type: 'danger',
+            //     },
+            //     {
+            //         text: '保存',
+            //         type: 'primary',
+            //         action: async () => {
+            //             await saveFile();
+            //             return true;
+            //         }
+            //     }
+            // ]
+        });
+
+        // 如果用户点击取消，返回 false
+        if (result === undefined) {
+            return false;
+        }
+
+        // 如果用户选择保存或不保存，返回 true
+        return true;
+    } catch (error) {
+        console.error('检查文件保存状态失败:', error);
+        return false;
+    }
+}
+
+/**
+ * 打开文件：用户选择好路径调用loadFile函数
+ * @returns 
+ */
+export async function openFile() {
+    const historyStore = useHistoryStore();
+
+    try {
+        // 先检查当前文件是否需要保存
+        // const canProceed = await checkFileSave();
+        // if (!canProceed) {
+        //     return;
+        // }
+
+        // 打开文件选择对话框
+        const selected = await open({
+            multiple: false,
+            filters: [{
+                name: 'Knowledge Canvas',
+                extensions: ['kc']
+            }]
+        });
+
+        // 如果用户选择了文件
+        if (selected) {
+            const filePath = selected as string;
+            const fileName = extractFileNameWithoutExtension(filePath);
+
+            // 加载文件
+            await loadFile(filePath, fileName);
+
+            // 添加到历史记录
+            await historyStore.addHistory(fileName, filePath);
+            // 保存为最后打开的文件
+            await historyStore.saveLastFile(fileName, filePath);
+
+            // 确保路由到编辑器页面
+            router.push({ name: 'editorIndex' });
+        }
+    } catch (error) {
+        console.error('打开文件失败:', error);
     }
 }
 
