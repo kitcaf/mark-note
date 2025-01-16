@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import { Separator } from '@/components/ui/separator'
-import SidebarNav from '../components/SidebarNav.vue'
-</script>
-
 <template>
     <div class="hidden space-y-6 px-4 pb-4 md:block">
         <div class="space-y-0.5">
@@ -26,3 +21,8 @@ import SidebarNav from '../components/SidebarNav.vue'
         </div>
     </div>
 </template>
+<script setup lang="ts">
+import { Separator } from '@/components/ui/separator'
+import SidebarNav from '../components/SidebarNav.vue'
+</script>
+

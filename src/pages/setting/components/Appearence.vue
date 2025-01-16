@@ -44,7 +44,7 @@ import { h } from 'vue'
             外观
         </h3>
         <p class="text-sm text-muted-foreground">
-            Customize the appearance of the app. Automatically switch between day and night themes.
+            自定义应用程序的外观。自动切换日间和夜间主题。
         </p>
     </div>
     <Separator class="my-3" />

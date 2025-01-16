@@ -6,7 +6,7 @@ import { useHistoryStore } from "../stores/history";
 import { dialog } from "./dialog";
 import router from "../router";
 import { open } from '@tauri-apps/plugin-dialog';
-import { $getRoot } from "lexical";
+import { $getRoot, CLEAR_HISTORY_COMMAND } from "lexical";
 
 /**
  * 从文件路径中提取文件名（包含扩展名）
@@ -99,8 +99,11 @@ export async function loadFile(filePath: string, fileName: string) {
             isSaved: true,
             isNew: false
         });
+        // 解析并设置新状态
         const parsedState = editor.parseEditorState(content);
-        editor.setEditorState(parsedState);
+        editor.setEditorState(parsedState, {
+            tag: 'history-merge' // 添加标记，避免进入历史栈
+        });
     } catch (error) {
         console.error('加载文件失败:', error);
         const historyStore = useHistoryStore();
