@@ -1,0 +1,59 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    /* 去除默认的下划线 */
+    color: inherit;
+    /* 继承父元素的文本颜色 */
+}
+
+
+[contenteditable="true"] {
+    outline: none;
+
+}
+
+/* 重置按钮样式 */
+button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* 重置输入框样式 */
+input {
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: transparent;
+}
+
+.filename-node:empty::before {
+    content: attr(data-placeholder);
+    color: #999;
+    font-style: italic;
+    pointer-events: none;
+}
+
+/* 确保不会意外重置边框 */
+button,
+input,
+label {
+    border: initial;
+}

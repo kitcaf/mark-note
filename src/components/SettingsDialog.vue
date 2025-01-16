@@ -101,7 +101,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { useSettings } from '../composables/useSettings';
+import { useSettings } from '../pages/setting/useSettings';
 import {
     Dialog,
     DialogContent,

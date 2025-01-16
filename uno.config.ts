@@ -26,9 +26,7 @@ export default defineConfig({
     //@ts-ignore
     presetAnimations(),
     presetShadcn({
-      color: 'red',
-      // With default setting for SolidUI, you need to set the darkSelector option.
-      darkSelector: '[data-kb-theme="dark"]',
+      // color: ''
     }),
     presetAttributify(),
     presetTypography({
@@ -54,4 +52,9 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
   ],
+  theme: {
+    colors: {
+      primary: 'hsl(var(--primary))',
+    },
+  },
 })

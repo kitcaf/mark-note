@@ -1,38 +1,21 @@
-<script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-// import { useRoute } from 'vitepress'
-
-interface Item {
-    title: string
-    href: string
-}
-
-// const $route = useRoute()
-
-const sidebarNavItems: Item[] = [
-    {
-        title: '外观',
-        href: '/examples/forms/appearance',
-    },
-    {
-        title: '主题',
-        href: '/examples/forms/display',
-    },
-    {
-        title: 'markdown',
-        href: '/examples/forms/display',
-    },
-]
-</script>
-
 <template>
     <nav class="flex flex-col lg:flex-col lg:space-x-0 lg:space-y-1">
-        <Button v-for="item in sidebarNavItems" :key="item.title" variant="ghost" :class="cn(
+        <Button v-for="item in settingsStore.tabs" :key="item.value" variant="ghost" :class="[cn(
             'w-full text-left justify-start',
-            $route.path === `${item.href}.html` && 'bg-muted hover:bg-muted',
-        )">
-            {{ item.title }}
+            settingsStore.activeTab === item.value && 'bg-muted hover:bg-muted',
+        )]" @click="settingsStore.setActiveTab(item.value)">
+            <div :class="item.icon" class="mr-2 h-4 w-4" />
+            {{ item.label }}
         </Button>
     </nav>
 </template>
+
+<script setup lang="ts">
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { useSettingsStore } from '@/stores/settings'
+
+const settingsStore = useSettingsStore();
+
+
+</script>

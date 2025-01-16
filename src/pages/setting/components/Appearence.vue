@@ -1,55 +1,14 @@
-<script setup lang="ts">
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-
-import { toast } from '@/components/ui/toast'
-import { cn } from '@/lib/utils'
-// import { ChevronDownIcon } from '@radix-icons/vue'
-// import { toTypedSchema } from '@vee-validate/zod'
-// import { useForm } from 'vee-validate'
-import { h } from 'vue'
-// import * as z from 'zod'
-
-// const appearanceFormSchema = toTypedSchema(z.object({
-//   theme: z.enum(['light', 'dark'], {
-//     required_error: 'Please select a theme.',
-//   }),
-//   font: z.enum(['inter', 'manrope', 'system'], {
-//     invalid_type_error: 'Select a font',
-//     required_error: 'Please select a font.',
-//   }),
-// }))
-
-// const { handleSubmit } = useForm({
-//     validationSchema: appearanceFormSchema,
-//     initialValues: {
-//         theme: 'light',
-//         font: 'inter',
-//     },
-// })
-
-// const onSubmit = handleSubmit((values) => {
-//     toast({
-//         title: 'You submitted the following values:',
-//         description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
-//     })
-// })
-</script>
-
 <template>
     <div>
         <h3 class="text-lg font-medium">
-            外观
+            Appearance
         </h3>
         <p class="text-sm text-muted-foreground">
-            自定义应用程序的外观。自动切换日间和夜间主题。
+            Customize the appearance of the app. Automatically switch between day and night themes.
         </p>
     </div>
-    <Separator class="my-3" />
-    <!-- <form class="space-y-8" @submit="onSubmit"> -->
-    <form class="space-y-8">
+    <Separator />
+    <form class="space-y-8" @submit="onSubmit">
         <FormField v-slot="{ field }" name="font">
             <FormItem>
                 <FormLabel>Font</FormLabel>
@@ -152,3 +111,38 @@ import { h } from 'vue'
         </div>
     </form>
 </template>
+<script setup lang="ts">
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm } from 'vee-validate'
+import * as z from 'zod'
+import { useSettingsStore } from '@/stores/settings';
+
+const settingsStore = useSettingsStore();
+
+const appearanceFormSchema = toTypedSchema(z.object({
+    theme: z.enum(['light', 'dark'], {
+        required_error: '请选择主题',
+    }),
+    font: z.enum(['inter', 'manrope', 'system'], {
+        invalid_type_error: '选择字体',
+        required_error: '请选择字体',
+    }),
+}))
+
+const { handleSubmit } = useForm({
+    validationSchema: appearanceFormSchema,
+    initialValues: {
+        theme: settingsStore.settings.theme,
+        font: settingsStore.settings.font as 'inter' | 'manrope' | 'system',
+    },
+})
+
+const onSubmit = handleSubmit(async (values) => {
+    await settingsStore.updateSettings(values)
+})
+</script>

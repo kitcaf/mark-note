@@ -5,20 +5,20 @@ import { ref, watch } from 'vue';
 
 interface Settings {
   theme: 'light' | 'dark';
-  font: string;
+  font: 'inter' | 'manrope' | 'system';
   maxOutlineLevel: number;
 }
 
 export function useSettings() {
   const settings = ref<Settings>({
     theme: 'light',
-    font: 'Inter',
-    maxOutlineLevel: 3
+    font: 'inter',
+    maxOutlineLevel: 3,
   });
-  
+
   let store: Store | null = null;
 
-  // 初始化 store
+  // 初始化 store - 后期这里重构一下
   async function initStore() {
     if (!store) {
       const appDataDirPath = await appDataDir();
@@ -48,6 +48,16 @@ export function useSettings() {
     await store?.save();
   }
 
+  // 更新设置
+  async function updateSettings(newSettings: Partial<Settings>) {
+    settings.value = {
+      ...settings.value,
+      ...newSettings,
+    };
+    console.log("新的值", settings.value)
+    await saveSettings();
+  }
+
   // 监听设置变化自动保存
   watch(settings, async () => {
     await saveSettings();
@@ -56,6 +66,7 @@ export function useSettings() {
   return {
     settings,
     loadSettings,
-    saveSettings
+    saveSettings,
+    updateSettings,
   };
 } 
