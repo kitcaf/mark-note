@@ -17,6 +17,10 @@ export function useOutline(defaultMaxLevel: number = 3) {
     const outlineItems = ref<OutlineItem[]>([]);
     const maxLevel = ref(defaultMaxLevel); // 默认显示到3级标题
 
+    onMounted(() => {
+        updateOutline()
+    })
+
     // 检查节点是否是标题节点
     function isHeadingNode(node: LexicalNode): node is HeadingNode {
         return node instanceof HeadingNode;

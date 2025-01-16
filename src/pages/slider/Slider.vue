@@ -2,7 +2,7 @@
     <div class="h-full overflow-hidden flex flex-col bg-white border-r-2 border-gray-200" :style="{
         borderRight: '1px solid #e5e7eb',
     }">
-        <Tabs default-value="all">
+        <Tabs default-value="outline">
             <div class="flex items-center px-4 py-2">
                 <h1 class="text-xl font-bold">
                     note-book

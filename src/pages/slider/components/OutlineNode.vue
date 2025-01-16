@@ -1,22 +1,20 @@
 <template>
     <div :style="{ paddingLeft: `${(item.level - 1) * 16}px` }">
         <div class="flex items-center group py-1" @click="toggleCollapse">
-            <!-- 折叠按钮 -->
-            <button v-if="hasChildren" class="w-4 h-4 flex items-center justify-center mr-1">
-                <div class="i-carbon:caret-right transform transition-transform" :class="{ 'rotate-90': !collapsed }">
-                </div>
-            </button>
-            <!-- <span v-else class="w-4 h-4 mr-1"></span> -->
-
             <!-- 标题文本 -->
             <div class="flex-1 text-sm text-gray-600 hover:text-gray-900 cursor-pointer truncate"
                 @click="emit('click', item)">
                 {{ item.text }}
             </div>
+
+            <button v-show="hasChildren" class="w-4 h-4 flex items-center justify-center mr-1">
+                <div class="i-carbon:caret-right transform transition-transform" :class="{ 'rotate-90': !collapsed }">
+                </div>
+            </button>
         </div>
 
         <!-- 子节点 -->
-        <div v-if="hasChildren && !collapsed" class="space-y-1">
+        <div v-show="hasChildren && !collapsed" class="space-y-1">
             <OutlineNode v-for="child in children" :key="child.id" :item="child" :items="items"
                 @click="emit('click', $event)" />
         </div>

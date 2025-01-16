@@ -5,10 +5,10 @@
             <div class="flex-1 flex flex-col gap-2 p-4 pt-0">
                 <TransitionGroup name="list" appear>
                     <div v-for="item of historyStore.fileHistory" :key="item.filePath" :class="cn(
-                        'flex flex-col items-start gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-all',
+                        'flex flex-col items-start gap-2 cursor-pointer rounded-lg border px-3 py-2 text-left text-sm transition-all',
                     )" :style="{
                         border: '1px solid #e5e7eb',
-                    }">
+                    }" @click="handleFileClick(item.filePath, item.fileName)">
                         <div class="flex w-full flex-col gap-1">
                             <div class="flex items-center">
                                 <div class="flex items-center gap-2">
@@ -17,20 +17,20 @@
                                     </div>
                                 </div>
                                 <div class="ml-auto">
-                                    <DropdownMenu>
+                                    <DropdownMenu @click.stop>
                                         <DropdownMenuTrigger>
                                             <Button variant="ghost" size="icon">
                                                 <span class="i-carbon:overflow-menu-horizontal"></span>
                                             </Button>
-
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
-                                            <DropdownMenuItem>
+                                            <DropdownMenuItem
+                                                @click.stop="handleFileClick(item.filePath, item.fileName)">
                                                 <span class="i-carbon:view"></span>
                                                 查看文件
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem>
+                                            <DropdownMenuItem @click.stop="handleDeleteHistory(item.filePath)">
                                                 <span class="i-carbon:trash-can"></span>
                                                 删除文件
                                             </DropdownMenuItem>
@@ -76,13 +76,12 @@ function isCurrentFile(filePath: string) {
 
 // 处理文件点击
 async function handleFileClick(filePath: string, fileName: string) {
+    if (isCurrentFile(filePath)) return;
 
-    console.log("加载历史文件", filePath)
     try {
         await loadFile(filePath, fileName);
     } catch (error) {
         console.error('加载历史文件失败:', error);
-        // 可以添加错误提示
     } finally {
         isLoading.value = false;
     }
