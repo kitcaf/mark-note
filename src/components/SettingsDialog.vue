@@ -1,6 +1,6 @@
 <template>
     <Dialog :open="isOpen" @update:open="updateOpen">
-        <DialogContent class="sm:max-w-[800px]">
+        <DialogContent class="sm:max-w-[800px] isolate">
             <DialogHeader>
                 <DialogTitle>设置</DialogTitle>
                 <DialogDescription>
@@ -13,15 +13,10 @@
                 <!-- 侧边栏 -->
                 <aside class="-mx-4 lg:w-1/5">
                     <div class="space-y-1">
-                        <Button v-for="item in sidebarNavItems" 
-                            :key="item.href" 
-                            variant="ghost" 
-                            :class="[
-                                'w-full justify-start',
-                                currentNav === item.href ? 'bg-muted' : 'hover:bg-transparent hover:underline',
-                            ]" 
-                            @click="currentNav = item.href"
-                        >
+                        <Button v-for="item in sidebarNavItems" :key="item.href" variant="ghost" :class="[
+                            'w-full justify-start',
+                            currentNav === item.href ? 'bg-muted' : 'hover:bg-transparent hover:underline',
+                        ]" @click="currentNav = item.href">
                             {{ item.title }}
                         </Button>
                     </div>
@@ -48,14 +43,20 @@
                                 <RadioGroup v-model="settings.theme" class="grid grid-cols-2 gap-4">
                                     <div>
                                         <RadioGroupItem value="light" class="sr-only" />
-                                        <Label class="[&:has([data-state=checked])>div]:border-primary flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground">
+                                        <Label :class="[
+                                            'flex flex-col items-center justify-between rounded-md p-4',
+                                            'border-2 !border-solid',
+                                            // currentNav === 'light' ? '!border-primary' : '!border-muted',
+                                            'hover:bg-accent hover:text-accent-foreground'
+                                        ]">
                                             <div class="i-carbon:sun mb-2 h-6 w-6" />
                                             <span class="block text-center">浅色</span>
                                         </Label>
                                     </div>
                                     <div>
                                         <RadioGroupItem value="dark" class="sr-only" />
-                                        <Label class="[&:has([data-state=checked])>div]:border-primary flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground">
+                                        <Label
+                                            class="[&:has([data-state=checked])>div]:border-primary flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground">
                                             <div class="i-carbon:moon mb-2 h-6 w-6" />
                                             <span class="block text-center">深色</span>
                                         </Label>
@@ -150,3 +151,33 @@ const sidebarNavItems = [
 
 const currentNav = ref('appearance');
 </script>
+
+<style scoped>
+/* 添加全局样式确保边框可见 */
+:deep(.border-2) {
+    border-width: 2px !important;
+    border-style: solid !important;
+}
+
+:deep(.border-primary) {
+    border-color: rgb(var(--primary)) !important;
+}
+
+:deep(.border-muted) {
+    border-color: rgb(var(--muted)) !important;
+}
+
+/* 确保边框样式不被覆盖 */
+.radio-label {
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.radio-label[data-state="checked"] {
+    border-color: hsl(var(--primary));
+}
+
+.radio-label:hover {
+    border-color: hsl(var(--muted));
+}
+</style>

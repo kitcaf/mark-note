@@ -1,37 +1,69 @@
 <template>
     <div class="space-y-2 mt-3">
-        <div v-for="file in historyStore.fileHistory" :key="file.filePath"
-            class="flex items-center justify-between p-2 rounded cursor-pointer" :class="[
-                isCurrentFile(file.filePath)
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'hover:bg-gray-100'
-            ]" @click="handleFileClick(file.filePath, file.fileName)">
-            <div class="flex items-center space-x-2">
-                <span class="text-sm" :class="[
-                    isCurrentFile(file.filePath)
-                        ? 'text-blue-600'
-                        : 'text-gray-600'
-                ]">
-                    {{ file.fileName }}
-                </span>
+        <!-- 高度要计算 -->
+        <ScrollArea class="h-full flex">
+            <div class="flex-1 flex flex-col gap-2 p-4 pt-0">
+                <TransitionGroup name="list" appear>
+                    <div v-for="item of historyStore.fileHistory" :key="item.filePath" :class="cn(
+                        'flex flex-col items-start gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-all',
+                    )" :style="{
+                        border: '1px solid #e5e7eb',
+                    }">
+                        <div class="flex w-full flex-col gap-1">
+                            <div class="flex items-center">
+                                <div class="flex items-center gap-2">
+                                    <div class="font-semibold">
+                                        {{ item.fileName }}
+                                    </div>
+                                </div>
+                                <div class="ml-auto">
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <Button variant="ghost" size="icon">
+                                                <span class="i-carbon:overflow-menu-horizontal"></span>
+                                            </Button>
+
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent>
+                                            <DropdownMenuItem>
+                                                <span class="i-carbon:view"></span>
+                                                查看文件
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem>
+                                                <span class="i-carbon:trash-can"></span>
+                                                删除文件
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mr-auto text-xs"> 2024.1.15</div>
+                    </div>
+                </TransitionGroup>
             </div>
-            <!-- 删除按钮 -->
-            <button @click.stop="handleDeleteHistory(file.filePath)" :class="[
-                isCurrentFile(file.filePath)
-                    ? 'text-blue-400 hover:text-blue-600'
-                    : 'text-gray-400 hover:text-gray-600'
-            ]">
-                <div class="i-carbon:close text-sm"></div>
-            </button>
-        </div>
+
+        </ScrollArea>
     </div>
 </template>
 
 <script setup lang="ts">
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useHistoryStore } from '@/stores/history';
 import { useFileStore } from '@/stores/file';
 import { loadFile } from '@/utils/fileUtils';
 import { ref } from 'vue';
+import { cn } from '@/lib/utils'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+
 
 const historyStore = useHistoryStore();
 const fileStore = useFileStore();
@@ -65,3 +97,21 @@ async function handleDeleteHistory(filePath: string) {
     }
 }
 </script>
+
+<style scoped>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.list-leave-active {
+    position: absolute;
+}
+</style>
