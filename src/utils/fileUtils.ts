@@ -89,47 +89,20 @@ export async function loadFile(filePath: string, fileName: string) {
     const fileStore = useFileStore();
 
     try {
-        // 读取文件内容
         const content = await readTextFile(filePath);
-
-        // 获取编辑器实例
         const editor = editorStore.getEditorInstance();
 
-        // 先创建一个新的 EditorState
-        const parsedState = editor.parseEditorState(content);
-        console.log("加载文件成功", parsedState)
-        // 使用 Promise 包装状态更新过程
-        await new Promise<void>((resolve, reject) => {
-            try {
-                editor.update(() => {
-                    // 清空当前内容
-                    const root = $getRoot();
-                    root.clear();
-
-                    // 设置新状态
-                    editor.setEditorState(parsedState);
-
-                    // 更新文件状态
-                    fileStore.setCurrentFile({
-                        fileName,
-                        filePath,
-                        isSaved: true,
-                        isNew: false
-                    });
-
-                    resolve();
-                }, {
-                    discrete: true,  // 使用离散更新
-                    tag: 'history-load' // 添加标记
-                });
-            } catch (error) {
-                reject(error);
-            }
+        // 先更新文件状态，触发历史记录重置
+        fileStore.setCurrentFile({
+            fileName,
+            filePath,
+            isSaved: true,
+            isNew: false
         });
-
+        const parsedState = editor.parseEditorState(content);
+        editor.setEditorState(parsedState);
     } catch (error) {
         console.error('加载文件失败:', error);
-        // 错误处理
         const historyStore = useHistoryStore();
         dialog.message({
             title: '文件加载失败',
@@ -138,9 +111,6 @@ export async function loadFile(filePath: string, fileName: string) {
             useOverlay: false,
             onConfirm: () => historyStore.removeHistory(filePath)
         });
-
-        // 跳转到错误页面
-        router.push({ name: 'NoFile' });
         throw error;
     }
 }
