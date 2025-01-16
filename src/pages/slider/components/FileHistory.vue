@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { useHistoryStore } from '../stores/history';
-import { useFileStore } from '../stores/file';
-import { loadFile } from '../utils/fileUtils';
+import { useHistoryStore } from '@/stores/history';
+import { useFileStore } from '@/stores/file';
+import { loadFile } from '@/utils/fileUtils';
 import { ref } from 'vue';
 
 const historyStore = useHistoryStore();

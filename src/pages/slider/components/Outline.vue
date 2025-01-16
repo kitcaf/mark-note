@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { ScrollArea } from '@/components/ui/scroll-area';
 import OutlineNode from './OutlineNode.vue';
-import { useOutline } from '../composables/useOutline';
+import { useOutline } from '../../../composables/useOutline';
 
 const {
     filteredOutlineItems,

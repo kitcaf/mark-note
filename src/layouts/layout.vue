@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { useLayout } from '../composables/useLayout';
 import Top from '../components/top.vue';
-import Slider from '../components/slider.vue';
+import Slider from '@/pages/slider/Slider.vue';
 import Resizer from "../components/Resizer.vue"
 import SettingsDialog from '@/pages/setting/index.vue';
 import { ref } from 'vue';

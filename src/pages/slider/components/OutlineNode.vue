@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { OutlineItem } from "../composables/useOutline"
+import type { OutlineItem } from "@/composables/useOutline"
 
 const props = defineProps<{
     item: OutlineItem;
