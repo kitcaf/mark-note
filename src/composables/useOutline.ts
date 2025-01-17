@@ -58,7 +58,6 @@ export function useOutline(defaultMaxLevel: number = 3) {
     function updateOutline() {
         const editor = editorStore.editor;
         if (!editor) return;
-        console.log('更新大纲');
         editor.update(() => {
             const items: OutlineItem[] = [];
             const root = $getRoot();

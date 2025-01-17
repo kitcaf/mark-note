@@ -38,7 +38,6 @@ const handleImport = () => {
 
 // 处理新建文件
 const handleCreate = () => {
-    console.log("新建文件")
     createNewFile();
 };
 </script>

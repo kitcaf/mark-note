@@ -4,7 +4,7 @@ import { useFileStore } from "../stores/file";
 import { save } from "@tauri-apps/plugin-dialog";
 import { useHistoryStore } from "../stores/history";
 import { dialog } from "./dialog";
-import router from "../router";
+import router from "@/router";
 import { open } from '@tauri-apps/plugin-dialog';
 
 /**
@@ -136,24 +136,6 @@ export async function checkFileSave(): Promise<boolean> {
             content: '当前文件未保存，是否保存？',
             position: 'center',
             useOverlay: true,
-            // buttons: [
-            //     {
-            //         text: '取消',
-            //         type: 'default',
-            //     },
-            //     {
-            //         text: '不保存',
-            //         type: 'danger',
-            //     },
-            //     {
-            //         text: '保存',
-            //         type: 'primary',
-            //         action: async () => {
-            //             await saveFile();
-            //             return true;
-            //         }
-            //     }
-            // ]
         });
 
         // 如果用户点击取消，返回 false

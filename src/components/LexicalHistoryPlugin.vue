@@ -19,7 +19,6 @@ const historyState: HistoryState = createEmptyHistoryState();
 watch(
     () => fileStore.currentFile.filePath,
     () => {
-        console.log('文件路径变化');
         // 清空历史记录
         editor.dispatchCommand(CLEAR_HISTORY_COMMAND, undefined);
     }
