@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-between px-4 py-2 border-b">
+    <div class="flex items-center justify-between px-4 py-2 border-b dark:bg-background">
         <!-- 左侧文件名 -->
         <div class="flex items-center">
             <span class="text-sm text-gray-400">

@@ -7,18 +7,14 @@
 <script setup lang="ts">
 import { useSettingsStore } from '@/stores/settings';
 import { onMounted } from 'vue';
+import { initApplication } from '@/utils/setting';
 
 const settingsStore = useSettingsStore();
 
 onMounted(async () => {
   await settingsStore.loadSettings();
-
-  initApplaction()
+  initApplication(settingsStore.settings)
 })
 
-function initApplaction() {
-  const { windowHeight, windowWidth } = settingsStore.settings;
-  window.innerHeight = windowHeight;
-  window.innerWidth = windowWidth;
-}
+
 </script>

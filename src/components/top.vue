@@ -1,8 +1,8 @@
 <template>
-    <div data-tauri-drag-region class="bg-white flex items-center justify-between" :style="{
-        height: props.topHeight + 'px',
-        borderBottom: '1px solid #e5e7eb',
-    }">
+    <div data-tauri-drag-region
+        class="bg-white flex items-center border-b justify-between dark:bg-background dark:border-border" :style="{
+            height: props.topHeight + 'px',
+        }">
         <!-- 左侧 -->
         <div class="flex items-center h-full">
             <div class="flex items-center space-x-1 px-3 h-full">
@@ -12,9 +12,9 @@
         </div>
 
         <!-- 右侧 -->
-        <div class="flex items-center h-full relative">
+        <div class="flex items-center h-full relative ">
 
-            <div @click="$emit('show-settings')">
+            <div @click="$emit('show-settings')" class="cursor-pointer">
                 <WindowControl icon-class="i-carbon:settings" :height="props.topHeight" />
             </div>
             <MenuDropdown :menuItems="menuItems">

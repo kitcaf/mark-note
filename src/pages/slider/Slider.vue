@@ -1,11 +1,12 @@
 <template>
-    <div class="h-full overflow-hidden flex flex-col bg-white border-r-2 border-gray-200" :style="{
-        borderRight: '1px solid #e5e7eb',
-    }">
+    <div class="h-full overflow-hidden flex flex-col bg-white border-r dark:border-border border-gray-200 dark:bg-background"
+        :style="{
+            width: props.width + 'px',
+        }">
         <Tabs default-value="outline">
             <div class="flex items-center px-4 py-2">
                 <h1 class="text-xl font-bold">
-                    note-book
+                    note
                 </h1>
                 <TabsList class="ml-auto">
                     <TabsTrigger value="outline" class="text-zinc-600 dark:text-zinc-200">

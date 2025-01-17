@@ -1,9 +1,9 @@
 <template>
     <div :style="{ paddingLeft: `${(item.level - 1) * 16}px` }">
-        <div class="flex items-center group py-1" @click="toggleCollapse">
+        <div class="flex items-center group py-1 text-gray-600 hover:text-gray-900 dark:text-white dark:hover:text-muted-foreground cursor-pointer"
+            @click="toggleCollapse">
             <!-- 标题文本 -->
-            <div class="flex-1 text-sm text-gray-600 hover:text-gray-900 cursor-pointer truncate"
-                @click="emit('click', item)">
+            <div class="flex-1 text-sm  cursor-pointer truncate" @click="emit('click', item)">
                 {{ item.text }}
             </div>
 

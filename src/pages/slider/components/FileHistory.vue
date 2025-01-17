@@ -6,7 +6,7 @@
                 <TransitionGroup name="list" appear>
                     <div v-for="item of historyStore.fileHistory" :key="item.filePath" :class="[cn(
                         'flex flex-col items-start gap-2 cursor-pointer rounded-lg border px-3 py-2 text-left text-sm transition-all',
-                    ), isCurrentFile(item.filePath) ? 'bg-gray-100' : '']" :style="{
+                    ), isCurrentFile(item.filePath) ? 'bg-gray-100 dark:bg-muted' : '']" :style="{
                         border: '1px solid #e5e7eb',
                     }" @click="handleFileClick(item.filePath, item.fileName)">
                         <div class="flex w-full flex-col gap-1">

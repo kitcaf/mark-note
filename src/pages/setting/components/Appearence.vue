@@ -38,7 +38,7 @@
             </FormItem>
         </FormField>
 
-        <FormField v-slot="{ componentField }" type="radio" name="theme">
+        <FormField v-slot="{ componentField }" type="radio" name="mode">
             <FormItem class="space-y-1">
                 <FormLabel>暗亮设置</FormLabel>
                 <FormDescription>
@@ -126,7 +126,7 @@ import { useSettingsStore } from '@/stores/settings';
 const settingsStore = useSettingsStore();
 
 const appearanceFormSchema = toTypedSchema(z.object({
-    theme: z.enum(['light', 'dark'], {
+    mode: z.enum(['light', 'dark'], {
         required_error: '请选择主题',
     }),
     font: z.enum(['inter', 'manrope', 'system'], {
@@ -138,7 +138,7 @@ const appearanceFormSchema = toTypedSchema(z.object({
 const { handleSubmit } = useForm({
     validationSchema: appearanceFormSchema,
     initialValues: {
-        theme: settingsStore.settings.theme,
+        mode: settingsStore.settings.mode,
         font: settingsStore.settings.font as 'inter' | 'manrope' | 'system',
     },
 })

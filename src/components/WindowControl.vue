@@ -1,5 +1,5 @@
 <template>
-    <button class="window-control" :class="{ group: isClose }">
+    <button class="window-control cursor-pointer dark:hover:text-muted-foreground" :class="{ group: isClose }">
         <div class="icon-wrapper" :class="{ 'hover:bg-red-500': isClose }">
             <div :class="[iconClass, 'text-[10px]', { 'group-hover:text-white': isClose }]"></div>
         </div>
@@ -29,4 +29,4 @@ defineProps<{
 .window-control:not(.group) .icon-wrapper:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
-</style> 
+</style>

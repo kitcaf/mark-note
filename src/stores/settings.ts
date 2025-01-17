@@ -3,9 +3,10 @@ import { ref, computed } from 'vue';
 import { Store } from '@tauri-apps/plugin-store';
 import { join } from '@tauri-apps/api/path';
 import { appDataDir } from '@tauri-apps/api/path';
+import { initApplication } from '@/utils/setting';
 
 export interface Settings {
-    theme: 'light' | 'dark';
+    mode: 'light' | 'dark';
     font: string;
     maxOutlineLevel: number;
     windowHeight: number;
@@ -27,7 +28,7 @@ interface TabItem {
 export const useSettingsStore = defineStore('settings', () => {
     // 设置相关状态
     const settings = ref<Settings>({
-        theme: 'light',
+        mode: 'light',
         font: 'Inter',
         maxOutlineLevel: 3,
         windowHeight: 800,
@@ -88,7 +89,8 @@ export const useSettingsStore = defineStore('settings', () => {
             ...newSettings
         };
         await saveSettings();
-    }
+        initApplication(settings.value);
+    };
 
     // 切换标签页
     function setActiveTab(tab: TabValue) {

@@ -1,6 +1,6 @@
 <template>
 
-    <ScrollArea class="h-[calc(100vh-120px)]">
+    <ScrollArea class="h-[calc(100vh-120px)] dark:bg-background">
         <TransitionGroup name="list" appear>
             <div class="space-y-2 px-4 py-3">
                 <!-- 大纲树形结构 -->

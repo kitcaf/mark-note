@@ -1,23 +1,24 @@
 <template>
-    <div class="h-screen flex flex-col">
+    <div class="h-screen flex flex-col dark:bg-background">
         <!-- 固定顶部栏 -->
         <div class="fixed top-0 left-0 right-0 z-50 bg-white">
             <Top :topHeight="topHeight" @show-settings="showSettings = true" />
         </div>
 
         <!-- 左侧固定区域 -->
-        <div class="fixed left-0 bg-gray-100 border-r" :style="sliderStyle">
+        <div class="fixed left-0 bg-gray-100 border-r dark:border-border" :style="sliderStyle">
             <Slider :width="sliderWidth" />
         </div>
 
         <!-- 调整区域 -->
-        <div class="fixed z-10" :style="resizerStyle">
+        <div class="fixed z-10 dark:bg-border dark:border-border" :style="resizerStyle">
             <Resizer @resize="handleResize" class="h-full" />
         </div>
 
         <!-- 编辑区域 -->
         <div class="flex-1" :style="editorStyle">
-            <article class="overflow-auto bg-white relative text-base prose prose-truegray xl:text-xl !max-w-none"
+            <article
+                class="overflow-auto bg-white dark:bg-background relative text-base prose dark:prose-invert prose-truegray xl:text-xl !max-w-none"
                 :style="{ height: contentHeight }">
                 <router-view v-slot="{ Component }">
                     <keep-alive :include="['EditorIndex']">
