@@ -3,5 +3,5 @@
 </script>
 
 <template>
-    <div>配置分辨率</div>
+    <div>敬请期待</div>
 </template>

@@ -13,6 +13,11 @@ Mark Note 是一个基于 Vue 3 和 Tauri 的笔记应用程序，旨在提供�
 
 ## 预览
 
+![image.png](https://cloundpic.obs.cn-east-3.myhuaweicloud.com/images/20250117171705.png)
+
+![image.png](https://cloundpic.obs.cn-east-3.myhuaweicloud.com/images/20250117171744.png)
+
+![image.png](https://cloundpic.obs.cn-east-3.myhuaweicloud.com/images/20250117171821.png)
 
 ## 技术栈
 
