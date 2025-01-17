@@ -56,6 +56,7 @@ const {
     maxSliderWidth: 400
 });
 
+// 使用 useVModel 处理 showSettings
 const showSettings = ref(false);
 </script>
 

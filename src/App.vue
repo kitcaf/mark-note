@@ -12,5 +12,13 @@ const settingsStore = useSettingsStore();
 
 onMounted(async () => {
   await settingsStore.loadSettings();
+
+  initApplaction()
 })
+
+function initApplaction() {
+  const { windowHeight, windowWidth } = settingsStore.settings;
+  window.innerHeight = windowHeight;
+  window.innerWidth = windowWidth;
+}
 </script>

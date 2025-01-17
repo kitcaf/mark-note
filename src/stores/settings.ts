@@ -8,9 +8,15 @@ export interface Settings {
     theme: 'light' | 'dark';
     font: string;
     maxOutlineLevel: number;
+    windowHeight: number;
+    windowWidth: number;
+    initialTopHeight: number;
+    initialSliderWidth: number;
+    minSliderWidth: number;
+    maxSliderWidth: number;
 }
 
-export type TabValue = 'appearance' | 'theme' | 'markdown' | 'display';
+export type TabValue = 'appearance' | 'markdown' | 'display' | 'general';
 
 interface TabItem {
     value: TabValue;
@@ -23,15 +29,20 @@ export const useSettingsStore = defineStore('settings', () => {
     const settings = ref<Settings>({
         theme: 'light',
         font: 'Inter',
-        maxOutlineLevel: 3
+        maxOutlineLevel: 3,
+        windowHeight: 800,
+        windowWidth: 1000,
+        initialTopHeight: 32,
+        initialSliderWidth: 256,
+        minSliderWidth: 200,
+        maxSliderWidth: 400
     });
 
     // 标签页配置
     const tabs = ref<TabItem[]>([
         { value: 'appearance', label: '外观', icon: 'i-carbon:color-palette' },
-        { value: 'theme', label: 'theme', icon: 'i-carbon:document' },
         { value: 'markdown', label: 'Markdown', icon: 'i-carbon:document' },
-        { value: 'display', label: '显示', icon: 'i-carbon:screen' }
+        { value: 'general', label: '通用', icon: 'i-carbon:screen' }
     ]);
 
     // 当前激活的标签页

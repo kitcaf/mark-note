@@ -1,17 +1,17 @@
 <template>
     <div>
         <h3 class="text-lg font-medium">
-            Appearance
+            外观
         </h3>
         <p class="text-sm text-muted-foreground">
-            Customize the appearance of the app. Automatically switch between day and night themes.
+            自定义应用外观。自动切换日间和夜间主题。
         </p>
     </div>
     <Separator />
     <form class="space-y-8" @submit="onSubmit">
         <FormField v-slot="{ field }" name="font">
             <FormItem>
-                <FormLabel>Font</FormLabel>
+                <FormLabel>字体</FormLabel>
                 <div class="relative w-[200px]">
                     <FormControl>
                         <select :class="cn(
@@ -32,7 +32,7 @@
                     <ChevronDownIcon class="pointer-events-none absolute right-3 top-2.5 h-4 w-4 opacity-50" />
                 </div>
                 <FormDescription>
-                    Set the font you want to use in the dashboard.
+                    设置您要在仪表板中使用的字体。
                 </FormDescription>
                 <FormMessage />
             </FormItem>
@@ -40,9 +40,9 @@
 
         <FormField v-slot="{ componentField }" type="radio" name="theme">
             <FormItem class="space-y-1">
-                <FormLabel>Theme</FormLabel>
+                <FormLabel>暗亮设置</FormLabel>
                 <FormDescription>
-                    Select the theme for the dashboard.
+                    选择应用的暗亮设置
                 </FormDescription>
                 <FormMessage />
 
@@ -103,12 +103,13 @@
                 </RadioGroup>
             </FormItem>
         </FormField>
-
         <div class="flex justify-start">
-            <Button type="submit">
-                Update preferences
+            <Button type="submit" key="yellow">
+                <div></div>
+                更新设置
             </Button>
         </div>
+
     </form>
 </template>
 <script setup lang="ts">

@@ -10,7 +10,7 @@ import {
 } from 'unocss'
 
 import presetAnimations from 'unocss-preset-animations'
-import { presetShadcn } from 'unocss-preset-shadcn'
+import { presetShadcn, builtinColors } from 'unocss-preset-shadcn'
 
 export default defineConfig({
   presets: [
@@ -25,9 +25,7 @@ export default defineConfig({
     }),
     //@ts-ignore
     presetAnimations(),
-    presetShadcn({
-      // color: ''
-    }),
+    presetShadcn(builtinColors.map(c => ({ color: c }))),
     presetAttributify(),
     presetTypography({
       cssExtend: {
@@ -52,9 +50,14 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
   ],
-  theme: {
-    colors: {
-      primary: 'hsl(var(--primary))',
+  content: {
+    pipeline: {
+      include: [
+        // the default
+        /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
+        // include js/ts files
+        '(components|src)/**/*.{js,ts}',
+      ],
     },
-  },
+  }
 })

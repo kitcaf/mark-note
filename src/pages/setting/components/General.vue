@@ -3,5 +3,5 @@
 </script>
 
 <template>
-    <div>theme</div>
+    <div>配置分辨率</div>
 </template>

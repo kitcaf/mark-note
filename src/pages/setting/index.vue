@@ -1,10 +1,10 @@
 <template>
     <Dialog :open="isOpen" @update:open="updateOpen">
-        <!-- 硬编码后期修改一下, 同时计算出其宽高 -->
-        <DialogContent class="sm:max-w-[900px] sm:max-h-[700px]">
+        <DialogContent class="w-9/10 h-5/6 sm:max-w-full sm:max-h-full">
             <FormsLayout>
                 <AppearanceForm v-if="settingsStore.activeTab === 'appearance'"></AppearanceForm>
-                <Theme v-if="settingsStore.activeTab === 'theme'"></Theme>
+                <General v-if="settingsStore.activeTab === 'general'"></General>
+                <Markdown v-if="settingsStore.activeTab === 'markdown'"></Markdown>
             </FormsLayout>
         </DialogContent>
     </Dialog>
@@ -13,8 +13,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import AppearanceForm from './components/Appearence.vue'
-import Theme from './components/Theme.vue'
+import General from './components/General.vue'
 import FormsLayout from './layouts/FormLayout.vue'
+import Markdown from './components/Markdown.vue'
 import {
     Dialog,
     DialogContent,
@@ -34,9 +35,5 @@ const emit = defineEmits<{
 const isOpen = computed(() => props.modelValue);
 const updateOpen = (value: boolean) => {
     emit('update:modelValue', value);
-    if (value) {
-        // 重新加载设置
-        settingsStore.loadSettings();
-    }
 };
 </script>

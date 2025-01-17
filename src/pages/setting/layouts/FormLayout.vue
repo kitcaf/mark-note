@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-6 flex flex-col px-4 pb-4 ">
+    <div class="space-y-6 flex flex-col px-4 pb-4 w-full h-full">
         <div class="space-y-0.5">
             <h2 class="text-2xl font-bold tracking-tight">
                 设置
@@ -16,7 +16,7 @@
                 <SidebarNav />
             </aside>
             <div class="flex-1 space-y-4 pb-4 lg:max-w-2xl pl-3 max-h-[546px] overflow-y-auto ">
-                <div class="">
+                <div class="mb-5">
                     <slot />
                 </div>
             </div>

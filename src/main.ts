@@ -4,10 +4,10 @@ import App from "./App.vue";
 import router from './router'
 // import { useSettings } from './composables/useSettings';
 
-import 'virtual:uno.css'
 import '@unocss/reset/tailwind.css'
-import "@/assets/globals.css"
-import "@/assets/index.css"
+import 'virtual:uno.css'
+// import "@/assets/index.css"
+// import "@/assets/globals.css"
 
 
 const app = createApp(App)

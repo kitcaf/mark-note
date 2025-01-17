@@ -1,9 +1,9 @@
 <template>
-    <nav class="flex flex-col lg:flex-col lg:space-x-0 lg:space-y-1">
-        <Button v-for="item in settingsStore.tabs" :key="item.value" variant="ghost" :class="[cn(
+    <nav class="flex flex-col gap-2 lg:flex-col lg:space-x-0 lg:space-y-1">
+        <Button v-for="item in settingsStore.tabs" :key="item.value" :class="[cn(
             'w-full text-left justify-start',
-            settingsStore.activeTab === item.value && 'bg-muted hover:bg-muted',
-        )]" @click="settingsStore.setActiveTab(item.value)">
+        )]" @click="settingsStore.setActiveTab(item.value)"
+            :variant="settingsStore.activeTab === item.value ? 'default' : 'secondary'">
             <div :class="item.icon" class="mr-2 h-4 w-4" />
             {{ item.label }}
         </Button>
