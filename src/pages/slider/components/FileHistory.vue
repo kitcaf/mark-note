@@ -30,7 +30,7 @@
                                                 查看文件
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem @click.stop="handleDeleteHistory(item.filePath)">
+                                            <DropdownMenuItem @click.stop="handleDeleteFile(item.filePath)">
                                                 <span class="i-carbon:trash-can"></span>
                                                 删除文件
                                             </DropdownMenuItem>
@@ -52,8 +52,7 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useHistoryStore } from '@/stores/history';
 import { useFileStore } from '@/stores/file';
-import { loadFile } from '@/utils/fileUtils';
-import { ref } from 'vue';
+import { deleteFile, loadFile } from '@/utils/fileUtils';
 import { cn } from '@/lib/utils'
 import {
     DropdownMenu,
@@ -67,7 +66,6 @@ import { Button } from '@/components/ui/button'
 
 const historyStore = useHistoryStore();
 const fileStore = useFileStore();
-const isLoading = ref(false);
 
 // 检查是否是当前文件
 function isCurrentFile(filePath: string) {
@@ -77,23 +75,12 @@ function isCurrentFile(filePath: string) {
 // 处理文件点击
 async function handleFileClick(filePath: string, fileName: string) {
     if (isCurrentFile(filePath)) return;
-
-    try {
-        await loadFile(filePath, fileName);
-    } catch (error) {
-        console.error('加载历史文件失败:', error);
-    } finally {
-        isLoading.value = false;
-    }
+    await loadFile(filePath, fileName);
 }
 
 // 处理删除历史记录
-async function handleDeleteHistory(filePath: string) {
-    try {
-        await historyStore.removeHistory(filePath);
-    } catch (error) {
-        console.error('Failed to remove history:', error);
-    }
+async function handleDeleteFile(filePath: string) {
+    await deleteFile(filePath);
 }
 </script>
 

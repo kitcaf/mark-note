@@ -10,29 +10,31 @@
         <!-- 对话框 -->
         <Transition :name="position === 'center' ? 'zoom-fade' : 'slide-fade'">
             <div v-if="modelValue" :class="[
-                'fixed z-50 bg-white rounded-lg shadow-lg overflow-hidden bg-gray-50',
+                'fixed z-50 bg-white rounded-lg shadow-lg overflow-hidden bg-gray-50 dark:bg-background',
                 position === 'center'
                     ? 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
                     : 'bottom-4 right-4'
             ]" :style="{ minWidth: '320px', maxWidth: '460px' }">
                 <!-- 标题栏 -->
-                <div v-if="title" class="px-4 py-2  border-b flex justify-between items-center bg-gray-50">
-                    <h3 class="text-lg font-bold text-gray-900">{{ title }}</h3>
+                <div v-if="title"
+                    class="px-4 py-2  border-b flex justify-between items-center bg-gray-50 dark:bg-background">
+                    <h3 class="text-lg font-bold ">{{ title }}</h3>
                     <button v-if="showClose" @click="handleClose"
-                        class="text-gray-400 hover:text-gray-600 transition-colors">
+                        class="text-gray-400 dark:text-white hover:text-gray-600 transition-colors">
                         <div class="i-carbon:close w-5 h-5"></div>
                     </button>
                 </div>
 
                 <!-- 内容区 -->
-                <div class="px-4 py-2 bg-gray-50 text-gray-500">
+                <div class="px-4 py-2 bg-gray-50 text-gray-500 dark:bg-background">
                     <slot>{{ content }}</slot>
                 </div>
 
                 <!-- 按钮区 -->
-                <div v-if="buttons && buttons.length" class="px-4 py-3 bg-gray-50 flex justify-end space-x-2">
+                <div v-if="buttons && buttons.length"
+                    class="px-4 py-3 bg-gray-50 dark:bg-background flex justify-end space-x-2">
                     <template v-for="button in buttons" :key="button.text">
-                        <button @click="handleButtonClick(button)" :class="[
+                        <Button @click="handleButtonClick(button)" :class="[
                             'px-4 py-2 rounded transition-colors',
                             button.type === 'primary'
                                 ? 'bg-blue-500 text-white hover:bg-blue-600'
@@ -41,7 +43,7 @@
                                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                         ]">
                             {{ button.text }}
-                        </button>
+                        </Button>
                     </template>
                 </div>
             </div>
@@ -50,6 +52,9 @@
 </template>
 
 <script setup lang="ts">
+import { Button } from "@/components/ui/button"
+
+
 interface DialogButton {
     text: string;
     type?: 'primary' | 'default' | 'danger';

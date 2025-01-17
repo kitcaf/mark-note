@@ -1,4 +1,4 @@
-import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
+import { readTextFile, writeTextFile, remove } from "@tauri-apps/plugin-fs";
 import { useEditorStore } from "../stores/editor";
 import { useFileStore } from "../stores/file";
 import { save } from "@tauri-apps/plugin-dialog";
@@ -6,7 +6,6 @@ import { useHistoryStore } from "../stores/history";
 import { dialog } from "./dialog";
 import router from "../router";
 import { open } from '@tauri-apps/plugin-dialog';
-import { $getRoot, CLEAR_HISTORY_COMMAND } from "lexical";
 
 /**
  * 从文件路径中提取文件名（包含扩展名）
@@ -87,6 +86,7 @@ export function getExtension(fileName: string): string {
 export async function loadFile(filePath: string, fileName: string) {
     const editorStore = useEditorStore();
     const fileStore = useFileStore();
+    const historyStore = useHistoryStore();
 
     try {
         const content = await readTextFile(filePath);
@@ -106,7 +106,6 @@ export async function loadFile(filePath: string, fileName: string) {
         });
     } catch (error) {
         console.error('加载文件失败:', error);
-        const historyStore = useHistoryStore();
         dialog.message({
             title: '文件加载失败',
             content: (error as Error).toString(),
@@ -176,7 +175,6 @@ export async function checkFileSave(): Promise<boolean> {
  */
 export async function openFile() {
     const historyStore = useHistoryStore();
-
     try {
         // 先检查当前文件是否需要保存
         // const canProceed = await checkFileSave();
@@ -244,10 +242,11 @@ export const createNewFile = async () => {
  * @returns 
  */
 export const saveFile = async () => {
-    const editorStore = useEditorStore();
-    const fileStore = useFileStore();
     const historyStore = useHistoryStore();
+    const fileStore = useFileStore();
+    const editorStore = useEditorStore();
     const editor = editorStore.getEditorInstance();
+
 
     try {
         if (fileStore.currentFile.isNew || !fileStore.currentFile.filePath) {
@@ -291,4 +290,24 @@ export const saveFile = async () => {
     } catch (error) {
         console.error('保存文件失败:', error);
     }
-}; 
+};
+
+/**
+ * 根据路径删除文件
+ * @param filePath 文件路径
+ */
+export const deleteFile = async (filePath: string) => {
+    const historyStore = useHistoryStore();
+    try {
+        await remove(filePath);
+        historyStore.removeHistory(filePath);
+    } catch (error) {
+        dialog.message({
+            title: '文件加载失败',
+            content: (error as Error).toString(),
+            position: 'bottom-right',
+            useOverlay: false,
+            onConfirm: () => historyStore.removeHistory(filePath)
+        });
+    }
+}
