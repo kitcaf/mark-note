@@ -1,7 +1,7 @@
 import { Store } from '@tauri-apps/plugin-store';
 import { join } from '@tauri-apps/api/path';
 import { appDataDir } from '@tauri-apps/api/path';
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useFileStore } from './file';
 
@@ -101,12 +101,6 @@ export const useHistoryStore = defineStore('history', () => {
         if (!store) await initStore();
         fileHistory.value = [];
         await store?.set('fileHistory', []);
-        await store?.save();
-    }
-
-    async function commit(filePath: string, fileName: string) {
-        await store?.set('fileHistory', fileHistory.value);
-        await store?.set('lastFile', { filePath, fileName });
         await store?.save();
     }
 

@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
 import { createNewFile } from '../utils/fileUtils';
 
 defineOptions({

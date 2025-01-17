@@ -1,8 +1,8 @@
 // src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router';
-import Layout from '../layouts/layout.vue';
-import Index from '../pages/EditorIndex.vue';
-import NoFile from '../pages/NoFile.vue'
+import Layout from '@/layouts/layout.vue';
+import Index from '@/pages/editorIndex.vue';
+import NoFile from '@/pages/NoFile.vue'
 
 const routes = [
     {

@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import FileHistory from './components/FileHistory.vue';
 import Outline from './components/Outline.vue';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -39,12 +38,6 @@ const props = defineProps<{
     width: number
 }>();
 
-const tabs = [
-    { id: 'outline', name: '大纲', icon: 'i-carbon:document-multiple' },
-    { id: 'history', name: '历史文件', icon: 'i-carbon:list' }
-];
-
-const currentTab = ref('outline');
 </script>
 
 <style scoped></style>

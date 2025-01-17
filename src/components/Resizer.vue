@@ -13,7 +13,7 @@ const emit = defineEmits<{
 
 let isResizing = false;
 
-const handleMouseDown = (e: MouseEvent) => {
+const handleMouseDown = () => {
     isResizing = true;
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
@@ -21,7 +21,7 @@ const handleMouseDown = (e: MouseEvent) => {
 
 const handleMouseMove = (e: MouseEvent) => {
     if (!isResizing) return;
-    
+
     // 限制最小宽度和最大宽度
     const newWidth = Math.max(200, Math.min(e.clientX, 400));
     emit('resize', newWidth);

@@ -1,6 +1,5 @@
-import { TextNode, NodeKey, SerializedTextNode, $createTextNode, $createParagraphNode, ParagraphNode, RangeSelection, EditorConfig, LexicalEditor, LexicalNode, $createRangeSelection, $setSelection, $getSelection, $isRangeSelection, KEY_ENTER_COMMAND, $getRoot } from 'lexical';
+import { TextNode, NodeKey, SerializedTextNode, $createTextNode, $createParagraphNode, ParagraphNode, RangeSelection, EditorConfig, LexicalEditor, LexicalNode, $createRangeSelection, $setSelection, $getSelection, $isRangeSelection, $getRoot } from 'lexical';
 import { useFileStore } from '../stores/file';
-import { $convertFromMarkdownString } from '@lexical/markdown';
 
 export type SerializedFileNameNode = SerializedTextNode;
 
@@ -17,7 +16,7 @@ export class FileNameNode extends TextNode implements LexicalNode {
         super(text, key);
     }
 
-    createDOM(config: EditorConfig, editor?: LexicalEditor): HTMLElement {
+    createDOM(config: EditorConfig, _editor?: LexicalEditor): HTMLElement {
         const dom = super.createDOM(config);
         // 设置固定样式
         dom.style.fontSize = '2em';

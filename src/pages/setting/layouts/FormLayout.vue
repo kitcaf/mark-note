@@ -26,10 +26,4 @@
 <script setup lang="ts">
 import { Separator } from '@/components/ui/separator'
 import SidebarNav from '../components/SidebarNav.vue'
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from '@/components/ui/tabs'
 </script>

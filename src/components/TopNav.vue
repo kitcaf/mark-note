@@ -20,7 +20,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useFileStore } from '../stores/file';
-import { Button } from '@/components/ui/button';
 
 const fileStore = useFileStore();
 

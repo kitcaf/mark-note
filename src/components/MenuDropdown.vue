@@ -3,7 +3,7 @@
         <slot :onshow="showMenu" :onhidden="hideMenu" />
         <div v-show="visible" ref="menuRef" class="menu-dropdown" :style="menuPosition">
             <div class="flex flex-col w-full py-1">
-                <div v-for="item in menuItems" :key="item.id" class="menu-item" @click="handleItemClick(item)">
+                <div v-for="item in props.menuItems" :key="item.id" class="menu-item" @click="handleItemClick(item)">
                     {{ item.label }}
                 </div>
             </div>
